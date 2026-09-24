@@ -1,20 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
-import { animate, motion, useInView, useMotionValue, useReducedMotion, useTransform } from 'framer-motion';
-import type { AnimationPlaybackControls } from 'framer-motion';
+import { motion, useInView, useReducedMotion, useTransform } from 'framer-motion';
+import { Pause, Play } from 'lucide-react';
+import { HeroMascot } from './HeroMascot';
+import { useBadgeScene } from './useBadgeScene';
 
 export function ProfileBadge() {
   const stage = useRef<HTMLDivElement>(null);
   const tether = useRef<SVGSVGElement>(null);
-  const animations = useRef<AnimationPlaybackControls[]>([]);
   const inView = useInView(stage, { margin: '100px' });
   const reducedMotion = useReducedMotion();
   const [canDrag, setCanDrag] = useState(false);
-  const [dragging, setDragging] = useState(false);
   const [pageVisible, setPageVisible] = useState(true);
   const [dimensions, setDimensions] = useState({ width: 360, height: 160 });
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const rotate = useTransform(x, [-100, 0, 100], [-4, 0, 4]);
+  const { x, y, rotate, lagX, lagY, clock, paused, setPaused, startDrag, finishDrag } = useBadgeScene(
+    inView && pageVisible, Boolean(reducedMotion), dimensions.width < 350,
+  );
   const strapPath = useTransform(() => {
     const dx = x.get();
     const dy = y.get();
@@ -22,8 +22,12 @@ export function ProfileBadge() {
     const anchor = dimensions.width / 2;
     const endX = anchor + dx + 18 * Math.sin(angle);
     const endY = dimensions.height + dy - 18 * Math.cos(angle);
-    const bend = dx * 0.24 + Math.sin(dy / 30) * Math.min(16, Math.abs(dy) * 0.4);
-    return `M ${anchor} 0 C ${anchor + bend} ${endY * 0.35}, ${endX - bend} ${endY * 0.74}, ${endX} ${endY}`;
+    const lag = Math.max(-34, Math.min(34, lagX.get() - dx));
+    const verticalLag = Math.max(-24, Math.min(24, lagY.get() - dy));
+    const slack = (Math.max(0, verticalLag) * 0.3 + Math.max(0, -dy) * 0.12) * (dx < 0 ? -1 : 1);
+    const upperX = anchor + dx * 0.18 + lag * 0.45 + slack;
+    const lowerX = anchor + dx * 0.78 + lag * 0.5 + slack;
+    return `M ${anchor} 0 C ${upperX} ${endY * 0.34 + Math.abs(verticalLag) * 0.1}, ${lowerX} ${endY * 0.74 + verticalLag * 0.15}, ${endX} ${endY}`;
   });
 
   useEffect(() => {
@@ -50,30 +54,6 @@ export function ProfileBadge() {
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
-    if (!inView || !pageVisible || dragging) return;
-    if (reducedMotion) { x.set(0); y.set(0); return; }
-    let cancelled = false;
-    const settle = [
-      animate(x, 0, { type: 'spring', stiffness: 210, damping: 17 }),
-      animate(y, 0, { type: 'spring', stiffness: 210, damping: 17 }),
-    ];
-    animations.current = settle;
-    void Promise.all(settle).then(() => {
-      if (cancelled) return;
-      animations.current = [
-        animate(x, [0, 7, 0, -7, 0], { duration: 3.4, ease: 'easeInOut', repeat: Infinity }),
-        animate(y, [0, -11, 0, 7, 0], { duration: 3.4, ease: 'easeInOut', repeat: Infinity }),
-      ];
-    });
-    return () => { cancelled = true; animations.current.forEach(animation => animation.stop()); };
-  }, [dragging, inView, pageVisible, reducedMotion, x, y]);
-
-  const startDrag = () => {
-    animations.current.forEach(animation => animation.stop());
-    setDragging(true);
-  };
-
   return (
     <div ref={stage} className="hero-badge-stage">
       <div className="hero-badge-halo" aria-hidden="true" />
@@ -88,9 +68,10 @@ export function ProfileBadge() {
             <motion.path d={strapPath} fill="none" stroke="#8a98a3" strokeWidth="1" strokeDasharray="3 5" opacity="0.6" />
           </svg>
           <motion.div className="hero-badge-body" style={{ x, y, rotate, transformOrigin: '50% 0%' }}
-            drag={canDrag && !reducedMotion} dragElastic={0.24} dragMomentum={false}
+            drag={canDrag && !reducedMotion} dragElastic={0.18} dragMomentum={false}
+            dragTransition={{ bounceStiffness: 52, bounceDamping: 12 }}
             dragConstraints={{ top: -48, bottom: 70, left: -75, right: 75 }}
-            onDragStart={startDrag} onDragEnd={() => setDragging(false)} onPointerCancel={() => setDragging(false)}
+            onDragStart={startDrag} onDragEnd={(_, info) => finishDrag(info.velocity)} onPointerCancel={() => finishDrag()}
             whileDrag={{ cursor: 'grabbing' }}>
             <div className="hero-card-connector" aria-hidden="true"><span /><i /></div>
             <div className="hero-id-card">
@@ -105,6 +86,13 @@ export function ProfileBadge() {
               </div>
             </div>
           </motion.div>
+          <HeroMascot clock={clock} reducedMotion={Boolean(reducedMotion)} />
+          {!reducedMotion && <button type="button" className="hero-scene-control"
+            aria-label={paused ? 'Play hero animation' : 'Pause hero animation'} aria-pressed={paused}
+            onClick={() => setPaused(value => !value)}>
+            {paused ? <Play size={11} aria-hidden="true" /> : <Pause size={11} aria-hidden="true" />}
+            <span>{paused ? 'Play' : 'Pause'}</span>
+          </button>}
         </div>
       </motion.div>
       <span className="hero-badge-side-note" aria-hidden="true">PROFILE / 001</span>

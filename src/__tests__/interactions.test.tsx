@@ -4,6 +4,7 @@ import { useInView, useReducedMotion } from 'framer-motion';
 import { Magnet } from '../components/Magnet';
 import { MarqueeSection } from '../sections/MarqueeSection';
 import App from '../App';
+import { ProfileBadge } from '../components/ProfileBadge';
 
 vi.mock('framer-motion', async (importOriginal) => {
   const actual = await importOriginal<typeof import('framer-motion')>();
@@ -21,6 +22,25 @@ beforeEach(() => {
   vi.mocked(useReducedMotion).mockReturnValue(false);
 });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); });
+
+describe('hero scene controls', () => {
+  it('lets visitors pause and resume the decorative scene without hiding the portrait', () => {
+    render(<ProfileBadge />);
+    fireEvent.click(screen.getByRole('button', { name: 'Pause hero animation' }));
+    expect(screen.getByRole('button', { name: 'Play hero animation' })).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByRole('img', { name: 'Nguyen Phuong Nam' })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Play hero animation' }));
+    expect(screen.getByRole('button', { name: 'Pause hero animation' })).toHaveAttribute('aria-pressed', 'false');
+  });
+
+  it('keeps a static decorative greeting when reduced motion is requested', () => {
+    vi.mocked(useReducedMotion).mockReturnValue(true);
+    const { container } = render(<ProfileBadge />);
+    expect(screen.queryByRole('button', { name: /hero animation/ })).not.toBeInTheDocument();
+    expect(container.querySelector('.hero-mascot')).toHaveAttribute('aria-hidden', 'true');
+    expect(screen.getByRole('img', { name: 'Nguyen Phuong Nam' })).toBeInTheDocument();
+  });
+});
 
 describe('magnetic portrait interaction', () => {
   it('responds to a fine pointer, resets on leave, and removes listeners on unmount', () => {

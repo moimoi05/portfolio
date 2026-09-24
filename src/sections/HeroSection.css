@@ -52,12 +52,18 @@
 .hero .hero-id-name { font-size: clamp(27px, 2.55vw, 39px); font-weight: 600; line-height: .98; letter-spacing: -.045em; }
 .hero .hero-id-role { margin-top: 13px; color: #b7c3cb; font-size: 10px; font-weight: 400; letter-spacing: .15em; }
 .hero .hero-badge-side-note { position: absolute; right: 1%; bottom: 19%; color: #76818a; font-size: 10px; letter-spacing: .2em; writing-mode: vertical-rl; }
+.hero .hero-mascot { position: absolute; right: -48px; bottom: -28px; z-index: 3; width: 130px; aspect-ratio: 150 / 140; pointer-events: none; }
+.hero .hero-mascot-art { display: block; width: 100%; height: 100%; overflow: visible; }
+.hero .hero-scene-control { position: absolute; bottom: -35px; left: 0; display: inline-flex; align-items: center; gap: 7px; min-height: 30px; padding: 4px 8px; border-radius: 4px; color: #aebcc7; font-size: 9px; letter-spacing: .12em; text-transform: uppercase; opacity: .7; transition: opacity 180ms; }
+.hero .hero-scene-control:hover { opacity: 1; }
+.hero .hero-scene-control:focus-visible { opacity: 1; outline: 1px solid #d7e2ea; outline-offset: 2px; }
 
 @media (max-width: 1080px) {
   .hero .hero-layout { grid-template-columns: minmax(0, 1fr) minmax(280px, .82fr); column-gap: 16px; }
   .hero .hero-identity-heading { font-size: clamp(54px, 6.3vw, 76px); }
   .hero .hero-badge-entrance { width: clamp(285px, 31vw, 370px); }
   .hero .hero-badge-stage { min-height: 560px; }
+  .hero .hero-mascot { width: 112px; right: -42px; }
   .hero .hero-meta { gap: 20px; }
   .hero .hero-meta strong { font-size: 10px; }
 }
@@ -80,6 +86,7 @@
   .hero .hero-badge-entrance { width: min(74vw, 340px); }
   .hero .hero-badge-rig { --tether-height: 98px; --badge-gap: 65px; }
   .hero .hero-badge-body { cursor: default; }
+  .hero .hero-mascot { width: 100px; right: -38px; bottom: -26px; }
   .hero .hero-badge-halo { width: min(100vw, 470px); }
   .hero .hero-id-card { border-radius: 20px; cursor: default; }
   .hero .hero-id-name { font-size: clamp(25px, 6.3vw, 34px); }
