@@ -1,0 +1,128 @@
+.nam-projects-section { position: relative; z-index: 10; padding: 110px clamp(20px, 4vw, 64px) 0; background: #0c0c0c; }
+.nam-projects-intro { display: flex; justify-content: space-between; gap: 24px; margin-bottom: 25px; color: #899196; font-size: 11px; text-transform: uppercase; letter-spacing: .16em; }
+.nam-projects-heading { margin-bottom: 72px; font-size: clamp(2.25rem, 8.5vw, 140px); font-weight: 800; line-height: .95; letter-spacing: -.055em; text-transform: uppercase; white-space: nowrap; }
+.nam-project-stack { --nam-card-top: 24px; max-width: 1600px; margin: 0 auto; padding-bottom: 45px; }
+.nam-project-slot { position: relative; margin-bottom: 32px; }
+/* Native sticky overlap keeps the stacked silhouette without rescaling every
+   image/SVG surface on each scroll frame. Contain only the clipped previews;
+   the card itself remains unconstrained so dialogs and focus rings can escape. */
+.nam-website-preview, .nam-concept-preview, .paper-figure { contain: paint; }
+.nam-project-card { background: #101112; border: 1px solid #51585b; border-radius: 36px; padding: 30px; transition: border-color 220ms; }
+.nam-project-card:hover { border-color: #b5c0c7; }
+.nam-project-header { display: flex; align-items: center; gap: 28px; }
+.nam-project-number { font-size: clamp(3.5rem, 7.5vw, 112px); font-weight: 700; line-height: .85; letter-spacing: -.065em; color: #bac3c8; }
+.nam-project-title { flex: 1; min-width: 0; }
+.nam-project-title > p { color: #9aa4aa; font-size: 10px; font-weight: 300; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 10px; }
+.nam-project-title h3 { font-size: clamp(1.3rem, 2.5vw, 40px); line-height: 1.05; font-weight: 500; letter-spacing: -.025em; text-transform: uppercase; }
+.nam-project-action { display: inline-flex; justify-content: center; align-items: center; gap: 14px; flex-shrink: 0; min-height: 46px; border: 1px solid #9aa5ab; padding: 12px 22px; border-radius: 999px; background: transparent; color: #d7e2ea; font-size: 11px; text-transform: uppercase; letter-spacing: .09em; cursor: pointer; transition: background 200ms, color 200ms; }
+.nam-project-action:hover { background: #d7e2ea; color: #101112; }
+.nam-project-meta { display: flex; justify-content: space-between; align-items: center; gap: 25px; margin: 25px 0; }
+.nam-project-meta > p { max-width: 580px; font-weight: 300; font-size: 14px; line-height: 1.6; color: #aeb8bf; }
+.nam-project-meta ul { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; list-style: none; max-width: 350px; }
+.nam-project-meta li { border: 1px solid #394045; border-radius: 20px; padding: 5px 10px; color: #a5afb5; font-size: 10px; white-space: nowrap; }
+.nam-website-preview { position: relative; height: clamp(300px, 34vw, 510px); overflow: hidden; background: #232826; border: 1px solid #353b38; border-radius: 20px; }
+.nam-website-preview img { position: absolute; object-fit: cover; object-position: top; border: 1px solid #657066; border-radius: 8px; box-shadow: 0 12px 40px #0005; transition: transform 550ms; }
+.nam-website-preview:hover img { transform: translateY(-5px); }
+.nam-site-home { width: 63%; height: 80%; top: 10%; left: 4%; }
+.nam-site-interiors { width: 34%; height: 56%; right: 4%; top: 5%; }
+.nam-site-detail { width: 40%; height: 45%; right: 7%; bottom: 7%; }
+.nam-website-preview figcaption { position: absolute; bottom: 12px; left: 4%; display: flex; gap: 14px; color: #dbe2db; font-size: 9px; letter-spacing: .1em; }
+.nam-website-preview figcaption span { color: #aeb8b0; letter-spacing: 0; }
+.nam-concept-preview { min-height: 330px; overflow: hidden; border: 1px solid #333b40; border-radius: 20px; background: #15191c; }
+.nam-concept-preview > figcaption { display: flex; justify-content: space-between; gap: 16px; padding: 17px 22px; border-bottom: 1px solid #333b40; color: #8f9ba3; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
+.nam-concept-preview > figcaption span:first-child { color: #d7e2ea; }
+.nam-concept-note { border-top: 1px solid #333b40; padding: 12px 22px; color: #8c989f; font-family: monospace; font-size: 10px; }
+.nam-system-map { max-width: 880px; padding: 22px 28px; margin: auto; }
+.nam-system-entry { display: flex; align-items: center; flex-direction: column; gap: 5px; }
+.nam-system-entry > span { color: #8e9ca5; font-size: 10px; }
+.nam-system-entry > strong { font-size: clamp(15px, 2vw, 24px); font-weight: 400; letter-spacing: .15em; }
+.nam-system-entry small { font-size: 10px; color: #849199; }
+.nam-system-branches { display: grid; grid-template-columns: repeat(3, 1fr); margin: 16px 16.6% 0; border-top: 1px solid #74848e; height: 18px; }
+.nam-system-branches i { border-left: 1px solid #74848e; }
+.nam-system-branches i:nth-child(2) { justify-self: center; }.nam-system-branches i:last-child { justify-self: end; }
+.nam-system-nodes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.nam-system-nodes > div { display: flex; flex-direction: column; gap: 7px; padding: 15px; background: #20272c; border: 1px solid #4a5760; border-radius: 9px; }
+.nam-system-nodes small { color: #95a3ac; font-size: 9px; text-transform: uppercase; letter-spacing: .07em; }
+.nam-system-nodes strong { font-size: 19px; font-weight: 400; }.nam-system-nodes span { color: #a5b1b8; font-size: 10px; }
+.nam-system-store { display: flex; align-items: center; gap: 10px; margin-top: 16px; border: 1px dashed #4a5760; padding: 11px 16px; font-size: 12px; border-radius: 8px; }.nam-system-store > span:last-child { margin-left: auto; color: #8e9ba3; font-size: 10px; }
+.nam-vision-map { padding: 18px 24px 0; }.nam-vision-map svg { display: block; width: 100%; height: 240px; border: 1px solid #454e52; border-radius: 10px; }.nam-vision-pipeline { display: flex; justify-content: center; gap: 30px; padding: 18px 0; color: #acb7bd; font-family: monospace; font-size: 11px; }
+.nam-research-map { max-width: 900px; margin: auto; padding: 28px; }.nam-research-axis { display: flex; justify-content: space-between; color: #8e9ba4; font-family: monospace; font-size: 10px; margin-bottom: 18px; letter-spacing: .06em; }
+.nam-observations { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }.nam-observation { padding: 13px 20px; border-top: 1px solid #75838c; border-bottom: 1px solid #384249; background: #1c2328; }.nam-observation small { font-size: 11px; color: #b0bbc2; }.nam-observation > span { display: block; color: #919fa8; font-size: 10px; }
+.nam-modalities { display: flex; align-items: center; gap: 9px; padding: 15px 0; }.nam-modalities i { width: 30px; height: 30px; border: 1px solid #788994; background: repeating-linear-gradient(90deg, #62768155 0 3px, transparent 3px 6px); }.nam-modalities i:nth-child(2) { border-radius: 50%; background: radial-gradient(circle, #a9b7bf 1px, transparent 2px); background-size: 5px 5px; }.nam-modalities i:last-child { transform: rotate(45deg) scale(.72); background: #687c8755; }
+.nam-research-flow { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-top: 23px; padding: 16px 20px; border: 1px solid #52636e; border-radius: 10px; color: #b7c4cc; font-size: 11px; }.nam-research-flow strong { font-weight: 500; }.nam-research-map > p { margin-top: 15px; color: #84939e; font-size: 11px; }
+.nam-project-dialog { width: min(690px, calc(100vw - 32px)); max-height: calc(100dvh - 48px); margin: auto; padding: 30px; overflow-y: auto; border: 1px solid #69757c; border-radius: 24px; color: #d7e2ea; background: #111517; box-shadow: 0 30px 100px #0008; }.nam-project-dialog::backdrop { background: #000b; backdrop-filter: blur(8px); }
+.nam-dialog-top { display: flex; align-items: center; justify-content: space-between; gap: 20px; color: #a3afb7; font-size: 10px; text-transform: uppercase; letter-spacing: .08em; }.nam-dialog-top button { display: grid; place-items: center; min-width: 44px; min-height: 44px; border-radius: 50%; border: 1px solid #57646b; color: inherit; background: transparent; cursor: pointer; }.nam-project-dialog h2 { margin: 22px 0 14px; font-size: clamp(28px, 4vw, 44px); line-height: 1.05; font-weight: 500; }.nam-dialog-context { color: #b7c2c9; line-height: 1.65; font-size: 15px; font-weight: 300; }.nam-case-details > div { margin-top: 24px; padding-top: 20px; border-top: 1px solid #303c43; }.nam-case-details h3 { margin-bottom: 8px; font-size: 14px; font-weight: 500; }.nam-case-details p { color: #9daeb8; line-height: 1.65; font-size: 13px; font-weight: 300; }.nam-dialog-note { margin: 24px 0; color: #87969f; font-size: 11px; line-height: 1.6; }
+@media (min-width: 1024px) and (min-height: 880px) { .nam-project-slot { position: sticky; min-height: 78vh; padding-bottom: 28px; } }
+@media (max-width: 767px) {
+  .nam-projects-section { padding-top: 75px; }.nam-projects-heading { margin-bottom: 42px; }.nam-projects-intro { font-size: 9px; letter-spacing: .07em; }.nam-projects-intro > span:last-child { text-align: right; }
+  .nam-project-card { padding: 20px; border-radius: 25px; }.nam-project-header { gap: 15px; flex-wrap: wrap; }.nam-project-title { flex-basis: 65%; }.nam-project-title > p { font-size: 9px; }.nam-project-title h3 { font-size: 24px; }.nam-project-header > .nam-project-action { margin-left: auto; }
+  .nam-project-meta { display: block; margin-top: 20px; }.nam-project-meta > p { font-size: 13px; }.nam-project-meta ul { justify-content: flex-start; max-width: none; margin-top: 15px; }.nam-project-meta li { font-size: 9px; }
+  .nam-concept-preview > figcaption { padding: 14px; font-size: 8px; letter-spacing: .05em; }.nam-concept-note { padding: 10px 14px; font-size: 9px; }.nam-system-map { padding: 22px 12px; }.nam-system-nodes { gap: 6px; }.nam-system-nodes > div { padding: 10px 7px; }.nam-system-nodes small { font-size: 8px; }.nam-system-nodes strong { font-size: 13px; }.nam-system-nodes span { font-size: 8px; }.nam-system-store { padding: 10px; font-size: 10px; }.nam-system-store > span:last-child { display: none; }
+  .nam-vision-map { padding: 12px 12px 0; }.nam-vision-map svg { height: 235px; }.nam-vision-pipeline { gap: 10px; font-size: 8px; }
+  .nam-research-map { padding: 24px 12px; }.nam-research-axis { font-size: 8px; }.nam-observations { gap: 8px; }.nam-observation { padding: 12px 8px; }.nam-observation > span { font-size: 8px; }.nam-modalities { gap: 5px; }.nam-modalities i { width: 17px; height: 22px; }.nam-research-flow { gap: 6px; padding: 14px 8px; font-size: 9px; }.nam-research-map > p { margin-top: 20px; }
+}
+@media (max-width: 399px) { .nam-project-card { padding: 14px; }.nam-project-title h3 { font-size: 20px; }.nam-projects-heading { font-size: 8.3vw; }.nam-website-preview { height: 260px; }.nam-project-number { font-size: 48px; }.nam-project-title > p { font-size: 8px; }.nam-vision-pipeline { gap: 6px; font-size: 7px; } }
+@media (prefers-reduced-motion: reduce) { .nam-project-slot { position: relative; top: 0 !important; }.nam-project-card { transform: none !important; }.nam-website-preview:hover img { transform: none; } }
+/* Large sculptural cards and legible, credited research figures. */
+.nam-projects-section { margin-top: -56px; border-radius: var(--display-radius) var(--display-radius) 0 0; }
+.nam-project-card { border: 2px solid #87939c; border-radius: clamp(40px, 4vw, 60px); padding: clamp(22px, 3vw, 44px); }
+.nam-project-number { font-size: clamp(72px, 9vw, 140px); color: #c2cdd5; }
+.nam-project-title > p { line-height: 1.7; }
+.nam-project-meta > p { max-width: 720px; }
+.nam-website-preview { display: grid; grid-template-columns: 40fr 60fr; grid-template-rows: 1fr 1fr; gap: 12px; padding: 0 0 32px; height: clamp(300px, 32vw, 460px); border: 0; background: transparent; border-radius: 16px; }
+.nam-website-preview img { position: static; width: 100%; height: 100%; min-height: 0; border-radius: 14px; object-fit: cover; object-position: top; box-shadow: none; }
+.nam-site-home { grid-column: 2; grid-row: 1 / 3; }.nam-site-interiors { grid-column: 1; grid-row: 1; }.nam-site-detail { grid-column: 1; grid-row: 2; }
+.nam-website-preview figcaption { left: 0; bottom: 0; }
+.paper-figure { border: 1px solid #48545c; border-radius: 20px; overflow: hidden; background: #171b1e; }
+.paper-heading { display: flex; justify-content: space-between; gap: 15px; padding: 14px 20px; color: #b6c1c9; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
+.paper-image { display: block; position: relative; background: #fff; padding: 14px; }
+.paper-image img { width: 100%; height: clamp(260px, 26vw, 375px); object-fit: contain; }
+.paper-image > span { display: flex; gap: 6px; align-items: center; position: absolute; right: 12px; bottom: 12px; padding: 7px 10px; background: #101112; border-radius: 100px; color: #fff; font-size: 10px; }
+.paper-figure figcaption { display: flex; justify-content: space-between; gap: 20px; padding: 18px 20px; }
+.paper-figure strong { display: block; font-size: 16px; font-weight: 400; margin-bottom: 5px; }.paper-figure p { font-size: 11px; color: #a5b0b9; line-height: 1.7; }
+.paper-links { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; flex-shrink: 0; font-size: 11px; }.paper-links a { display: inline-flex; gap: 6px; align-items: center; text-decoration: underline; text-underline-offset: 4px; }.paper-links a:hover { color: #fff; }
+@media (min-width: 1024px) and (min-height: 880px) { .nam-project-card { padding: 26px; }.nam-project-number { font-size: 100px; }.nam-project-meta { margin: 20px 0; }.paper-image img { height: min(26vw, 330px); } }
+@media (max-width: 767px) { .nam-project-card { padding: 20px; }.nam-project-number { font-size: 72px; }.nam-project-meta > p { line-height: 1.7; }.paper-heading { padding: 12px; font-size: 8px; }.paper-image { padding: 8px; }.paper-image img { height: 240px; }.paper-figure figcaption { flex-direction: column; padding: 14px; gap: 14px; }.paper-links { flex-direction: row; justify-content: space-between; }.paper-figure strong { font-size: 14px; }.paper-figure p { font-size: 10px; }.nam-project-header > .nam-project-action { margin-top: 5px; }.nam-project-header { gap: 16px; } }
+
+/* UAV thermal-vision concept: a vivid synthetic scan scene, clearly marked as illustrative. */
+.nam-uav-preview { overflow: hidden; border: 1px solid #51406a; border-radius: 18px; background: #111426; box-shadow: inset 0 0 48px #4e2d7730; }
+.nam-uav-stage { position: relative; isolation: isolate; overflow: hidden; background: radial-gradient(ellipse at 52% 45%, #493160 0, #201d39 52%, #111426 100%); }
+.nam-uav-scene { display: block; width: 100%; height: clamp(330px, 36vw, 460px); }
+.nam-uav-simulation-badge, .nam-uav-sweep-label { position: absolute; z-index: 1; display: inline-flex; align-items: center; gap: 8px; border: 1px solid #9a8be077; border-radius: 999px; background: #151c32; color: #d9fff9; box-shadow: 0 8px 25px #080b1880; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.nam-uav-simulation-badge { top: 16px; left: 16px; padding: 9px 12px; }
+.nam-uav-simulation-badge > span { width: 7px; height: 7px; flex: 0 0 7px; border-radius: 50%; background: #74ffdf; box-shadow: 0 0 12px #67ffe3; }
+.nam-uav-sweep-label { right: 16px; bottom: 16px; padding: 9px 12px; border-color: #ff9a7466; color: #ffe0c7; }
+.nam-uav-sweep-label i { width: 5px; height: 5px; border-radius: 50%; background: #ffb45e; box-shadow: 0 0 10px #ff845f; }
+.nam-uav-key { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px 24px; min-height: 48px; padding: 10px 16px; border-top: 1px solid #4c4669; background: linear-gradient(90deg, #17182c, #20203a 52%, #17182c); color: #bac8df; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 9px; letter-spacing: .08em; text-transform: uppercase; }
+.nam-uav-key > span { display: inline-flex; align-items: center; gap: 8px; }
+.nam-uav-key i { display: inline-block; width: 18px; height: 4px; border-radius: 9px; }
+.nam-uav-key-route { background: repeating-linear-gradient(90deg, #72fbeb 0 4px, transparent 4px 7px); }
+.nam-uav-key-warm { background: linear-gradient(90deg, #ef398c, #ff824d, #ffe46d); }
+.nam-uav-key-box { width: 12px !important; height: 12px !important; border: 1px solid #70fff0; background: transparent; }
+@media (max-width: 767px) {
+  .nam-uav-scene { height: 285px; }
+  .nam-uav-simulation-badge { top: 11px; left: 11px; padding: 7px 9px; font-size: 8px; }
+  .nam-uav-sweep-label { right: 10px; bottom: 10px; padding: 7px 9px; font-size: 8px; }
+  .nam-uav-key { justify-content: flex-start; gap: 8px 15px; padding: 10px 12px; font-size: 8px; }
+}
+@media (max-width: 399px) {
+  .nam-uav-scene { height: 255px; }
+  .nam-uav-key { gap: 8px 11px; font-size: 7px; }
+}
+.nam-bv108-preview { position: relative; min-height: clamp(470px, 44vw, 650px); padding: 26px; overflow: hidden; border: 1px solid #5145a3; border-radius: 22px; background: radial-gradient(ellipse at 79% 13%, #d946ef99 0, transparent 33%), radial-gradient(ellipse at 13% 86%, #22d3ee88 0, transparent 38%), linear-gradient(128deg, #182450 0%, #293087 43%, #592677 100%); isolation: isolate; }
+.nam-bv108-glow { position: absolute; z-index: -1; width: 480px; height: 480px; top: -40px; right: 4%; border-radius: 50%; background: radial-gradient(circle, #f43f5e55 0%, #f43f5e22 38%, transparent 70%); }
+.nam-bv108-topline { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin: 0 0 18px; color: #eef5ff; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
+.nam-bv108-topline span:last-child { display: inline-flex; align-items: center; gap: 7px; color: #aaf7ea; letter-spacing: .05em; }
+.nam-bv108-topline i { width: 7px; height: 7px; border-radius: 50%; background: #5cf4cf; box-shadow: 0 0 12px #5cf4cf; }
+.nam-bv108-shot { position: absolute; overflow: hidden; border: 2px solid #ffffffd9; border-radius: 14px; background: white; box-shadow: 0 24px 60px #080b2d80; }
+.nam-bv108-shot img { display: block; width: 100%; aspect-ratio: 1.9; object-fit: cover; object-position: top left; }
+.nam-bv108-dashboard-shot { left: 5%; top: 15%; width: 69%; transform: rotate(-2deg); }
+.nam-bv108-catalog-shot { z-index: 2; right: 3%; bottom: 13%; width: 47%; transform: rotate(3deg); }
+.nam-bv108-shot figcaption { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 13px; color: #18233d; background: linear-gradient(90deg, #f5f3ff, #ecfeff); font-size: 10px; }
+.nam-bv108-shot figcaption strong { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+.nam-bv108-shot figcaption span { color: #52647d; text-align: right; }
+.nam-bv108-workflow { position: absolute; z-index: 3; left: 5%; bottom: 7%; display: flex; flex-wrap: wrap; align-items: center; gap: 7px; padding: 10px 13px; border: 1px solid #b0f8ed99; border-radius: 999px; background: #101c34e8; color: #e5faff; box-shadow: 0 10px 35px #101c3480; font-size: 9px; }
+.nam-bv108-workflow span { padding: 5px 8px; border-radius: 999px; background: linear-gradient(110deg, #3459aa, #7137a7); }
+.nam-bv108-workflow i { color: #72fbeb; font-style: normal; }
+@media (max-width: 767px) { .nam-bv108-preview { min-height: 360px; padding: 15px; }.nam-bv108-topline { align-items: flex-start; flex-direction: column; gap: 8px; font-size: 8px; }.nam-bv108-dashboard-shot { top: 26%; left: 4%; width: 83%; }.nam-bv108-catalog-shot { bottom: 18%; right: 3%; width: 60%; }.nam-bv108-shot figcaption { padding: 7px 8px; font-size: 8px; }.nam-bv108-shot figcaption strong { font-size: 8px; }.nam-bv108-workflow { left: 4%; bottom: 5%; gap: 4px; padding: 6px; font-size: 7px; }.nam-bv108-workflow span { padding: 4px 6px; } }
+@media (max-width: 399px) { .nam-bv108-preview { min-height: 325px; padding: 12px; }.nam-bv108-shot figcaption span { display: none; }.nam-bv108-workflow { max-width: 92%; } }
