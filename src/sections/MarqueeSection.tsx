@@ -3,6 +3,7 @@ import { useInView, useReducedMotion } from 'framer-motion';
 import { Pause, Play } from 'lucide-react';
 import { marqueeClips } from '../data/marquee';
 import { getMarqueeOffset } from '../lib/motion';
+import { useLanguage } from '../context/LanguageContext';
 
 const rows = [marqueeClips.slice(0, 11), marqueeClips.slice(11)];
 type Clip = typeof marqueeClips[number];
@@ -36,6 +37,8 @@ function ReelTile({ clip, paused }: { clip: Clip; paused: boolean }) {
 }
 
 export function MarqueeSection() {
+  const { language } = useLanguage();
+  const isVietnamese = language === 'vi';
   const section = useRef<HTMLElement>(null);
   const firstRow = useRef<HTMLDivElement>(null);
   const secondRow = useRef<HTMLDivElement>(null);
@@ -98,7 +101,7 @@ export function MarqueeSection() {
   }, [active]);
 
   return (
-    <section ref={section} aria-label="Creative inspiration reel" className="marquee-section overflow-hidden bg-ink pb-10 pt-24 sm:pt-32 md:pt-40">
+    <section ref={section} aria-label={isVietnamese ? 'Thước phim cảm hứng sáng tạo' : 'Creative inspiration reel'} className="marquee-section overflow-hidden bg-ink pb-10 pt-24 sm:pt-32 md:pt-40">
       <div className="flex flex-col gap-3" aria-hidden="true">
         {rows.map((row, rowIndex) => (
           <div key={rowIndex} ref={rowIndex === 0 ? firstRow : secondRow} className="marquee-row flex w-max gap-3" style={{ willChange: active ? 'transform' : 'auto' }}>
@@ -109,7 +112,7 @@ export function MarqueeSection() {
       {!reducedMotion && <div className="flex justify-end px-6 pt-5 md:px-10">
         <button type="button" onClick={() => setPaused(value => !value)} aria-pressed={paused} className="inline-flex min-h-11 items-center gap-2 text-xs font-light uppercase tracking-widest text-mist/70 transition-colors hover:text-mist">
           {paused ? <Play size={12} aria-hidden="true" /> : <Pause size={12} aria-hidden="true" />}
-          {paused ? 'Play motion' : 'Pause motion'}
+          {paused ? (isVietnamese ? 'Phát chuyển động' : 'Play motion') : (isVietnamese ? 'Tạm dừng chuyển động' : 'Pause motion')}
         </button>
       </div>}
     </section>

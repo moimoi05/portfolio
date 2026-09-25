@@ -1,6 +1,9 @@
-export function UavPreview() {
+import type { Language } from '../context/LanguageContext';
+
+export function UavPreview({ language }: { language: Language }) {
+  const isVietnamese = language === 'vi';
   return (
-    <div className="nam-uav-preview" aria-label="Illustrative UAV thermal-vision simulation">
+    <div className="nam-uav-preview" aria-label={isVietnamese ? 'Mô phỏng minh họa thị giác nhiệt UAV' : 'Illustrative UAV thermal-vision simulation'}>
       <div className="nam-uav-stage">
         <svg
           className="nam-uav-scene"
@@ -9,10 +12,9 @@ export function UavPreview() {
           role="img"
           aria-labelledby="nam-uav-title nam-uav-description"
         >
-          <title id="nam-uav-title">UAV thermal-vision simulation</title>
+          <title id="nam-uav-title">{isVietnamese ? 'Mô phỏng thị giác nhiệt UAV' : 'UAV thermal-vision simulation'}</title>
           <desc id="nam-uav-description">
-            An illustrative quadcopter scans a colorful synthetic landscape. A cyan flight route, thermal ground colors,
-            sensor sweep, and two simulated detection regions are shown. No operational imagery or data is used.
+            {isVietnamese ? 'Hình minh họa UAV quét địa hình tổng hợp nhiều màu. Tuyến bay màu xanh lam, màu trường nhiệt, vùng quét cảm biến và hai vùng phát hiện mô phỏng được hiển thị. Không sử dụng hình ảnh hay dữ liệu vận hành.' : 'An illustrative quadcopter scans a colorful synthetic landscape. A cyan flight route, thermal ground colors, sensor sweep, and two simulated detection regions are shown. No operational imagery or data is used.'}
           </desc>
           <defs>
             <linearGradient id="nam-uav-sky" x2="0" y2="1">
@@ -118,31 +120,31 @@ export function UavPreview() {
             <path d="M738 329v-16h22m58 0h22v16m0 29v16h-22m-58 0h-22v-16" />
           </g>
           <g fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace" fontWeight="700" fontSize="11" letterSpacing="1.4">
-            <g transform="translate(284 258)"><rect width="112" height="25" rx="12" fill="#10283b" stroke="#54e7da" strokeOpacity=".65" /><circle cx="13" cy="12.5" r="3" fill="#76fff1" /><text x="23" y="16.5" fill="#c4fffa">SIM REGION A</text></g>
-            <g transform="translate(738 286)"><rect width="112" height="25" rx="12" fill="#392041" stroke="#ff91be" strokeOpacity=".7" /><circle cx="13" cy="12.5" r="3" fill="#ffcb69" /><text x="23" y="16.5" fill="#ffe5ed">SIM REGION B</text></g>
+            <g transform="translate(284 258)"><rect width="112" height="25" rx="12" fill="#10283b" stroke="#54e7da" strokeOpacity=".65" /><circle cx="13" cy="12.5" r="3" fill="#76fff1" /><text x="23" y="16.5" fill="#c4fffa">{isVietnamese ? 'VÙNG MÔ PHỎNG A' : 'SIM REGION A'}</text></g>
+            <g transform="translate(738 286)"><rect width="112" height="25" rx="12" fill="#392041" stroke="#ff91be" strokeOpacity=".7" /><circle cx="13" cy="12.5" r="3" fill="#ffcb69" /><text x="23" y="16.5" fill="#ffe5ed">{isVietnamese ? 'VÙNG MÔ PHỎNG B' : 'SIM REGION B'}</text></g>
           </g>
 
           <g fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace" fontSize="10" fontWeight="600" letterSpacing="1.3">
-            <g transform="translate(937 34)"><rect width="145" height="43" rx="9" fill="#11182bdc" stroke="#ffaf7b" strokeOpacity=".55" /><path d="M15 15h13m-13 0v13m13-13v13m-13 0h13" fill="none" stroke="#ffb575" strokeWidth="1.5" /><text x="39" y="19" fill="#ffe5cb">THERMAL / IR</text><text x="39" y="32" fill="#c2a6bd" fontSize="8">ILLUSTRATIVE RENDER</text></g>
+            <g transform="translate(937 34)"><rect width="145" height="43" rx="9" fill="#11182bdc" stroke="#ffaf7b" strokeOpacity=".55" /><path d="M15 15h13m-13 0v13m13-13v13m-13 0h13" fill="none" stroke="#ffb575" strokeWidth="1.5" /><text x="39" y="19" fill="#ffe5cb">THERMAL / IR</text><text x="39" y="32" fill="#c2a6bd" fontSize="8">{isVietnamese ? 'HÌNH MINH HỌA' : 'ILLUSTRATIVE RENDER'}</text></g>
           </g>
 
           <g transform="translate(41 403)" fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace" fontSize="9" fontWeight="600" letterSpacing="1.1">
             <rect width="326" height="37" rx="18" fill="#10182acb" stroke="#9a8be0" strokeOpacity=".5" />
-            <path d="M18 19h33" stroke="#72fbeb" strokeWidth="2.5" strokeDasharray="4 5" /><text x="59" y="22" fill="#ccdbf3">FLIGHT PATH</text>
-            <circle cx="160" cy="18.5" r="4" fill="#ffb75a" /><text x="172" y="22" fill="#ccdbf3">THERMAL FIELD</text>
+            <path d="M18 19h33" stroke="#72fbeb" strokeWidth="2.5" strokeDasharray="4 5" /><text x="59" y="22" fill="#ccdbf3">{isVietnamese ? 'TUYẾN BAY' : 'FLIGHT PATH'}</text>
+            <circle cx="160" cy="18.5" r="4" fill="#ffb75a" /><text x="172" y="22" fill="#ccdbf3">{isVietnamese ? 'TRƯỜNG NHIỆT' : 'THERMAL FIELD'}</text>
           </g>
           <g transform="translate(1003 394)" fill="none" stroke="#c4edff" strokeOpacity=".8" strokeWidth="1.4">
             <path d="M0 0h32M0 0v32M45 0h-32M45 0v32M0 43h32M0 43V11M45 43h-32M45 43V11" />
             <path d="M22 15h2m8 0h2m-12 7h2m8 0h2" stroke="#ffdc8d" strokeWidth="3" />
           </g>
         </svg>
-        <span className="nam-uav-simulation-badge"><span aria-hidden="true" /> Illustrative simulation</span>
-        <span className="nam-uav-sweep-label">UAV <i aria-hidden="true" /> THERMAL SWEEP</span>
+        <span className="nam-uav-simulation-badge"><span aria-hidden="true" /> {isVietnamese ? 'Mô phỏng minh họa' : 'Illustrative simulation'}</span>
+        <span className="nam-uav-sweep-label">UAV <i aria-hidden="true" /> {isVietnamese ? 'QUÉT NHIỆT' : 'THERMAL SWEEP'}</span>
       </div>
       <div className="nam-uav-key" aria-hidden="true">
-        <span><i className="nam-uav-key-route" /> Flight path</span>
-        <span><i className="nam-uav-key-warm" /> Thermal field</span>
-        <span><i className="nam-uav-key-box" /> Simulated detections</span>
+        <span><i className="nam-uav-key-route" /> {isVietnamese ? 'Tuyến bay' : 'Flight path'}</span>
+        <span><i className="nam-uav-key-warm" /> {isVietnamese ? 'Trường nhiệt' : 'Thermal field'}</span>
+        <span><i className="nam-uav-key-box" /> {isVietnamese ? 'Vùng phát hiện mô phỏng' : 'Simulated detections'}</span>
       </div>
     </div>
   );

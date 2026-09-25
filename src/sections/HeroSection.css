@@ -5,10 +5,15 @@
 .hero .hero-frame { position: relative; display: flex; flex-direction: column; width: min(100%, 1600px); min-height: 100svh; margin: 0 auto; padding: clamp(23px, 2.7vw, 44px) clamp(25px, 4.25vw, 68px) clamp(26px, 3vw, 48px); }
 .hero .hero-header { display: flex; align-items: center; justify-content: space-between; gap: 36px; padding-bottom: 22px; border-bottom: 1px solid #d7e2ea22; }
 .hero .hero-header-mark { flex: 0 0 auto; color: #f0e8ff; font-size: 21px; font-weight: 700; line-height: 1; letter-spacing: -.06em; text-shadow: 0 0 18px #b166ff75; }
+.hero .hero-header-controls { display: flex; align-items: center; gap: clamp(15px, 2vw, 30px); }
 .hero .hero-site-nav { display: flex; align-items: center; justify-content: flex-end; gap: clamp(20px, 3.6vw, 58px); color: #c3cdd5; font-size: 12px; font-weight: 400; letter-spacing: .13em; text-transform: uppercase; }
 .hero .hero-site-nav a { position: relative; white-space: nowrap; }
 .hero .hero-site-nav a::after { content: ''; position: absolute; right: 0; bottom: -23px; left: 0; height: 1px; background: #cf9eff; box-shadow: 0 0 9px #bb6cff; opacity: 0; transition: opacity 180ms; }
 .hero .hero-site-nav a:hover::after, .hero .hero-site-nav a:focus-visible::after { opacity: 1; }
+.language-switcher { display: inline-flex; flex: 0 0 auto; gap: 2px; padding: 2px; border: 1px solid #d7e2ea38; background: #0b0c10; }
+.language-switcher button { min-width: 29px; min-height: 25px; padding: 3px 6px; border: 0; background: transparent; color: #89939b; font-family: inherit; font-size: 9px; font-weight: 500; letter-spacing: .08em; cursor: pointer; transition: color 160ms, background 160ms; }
+.language-switcher button[aria-pressed="true"] { background: #d7e2ea; color: #101214; }
+.language-switcher button:focus-visible { outline: 1px solid #d7e2ea; outline-offset: 2px; }
 
 .hero .hero-layout { display: grid; flex: 1; grid-template-columns: minmax(0, 1.12fr) minmax(320px, .88fr); grid-template-rows: minmax(0, 1fr) auto; column-gap: clamp(25px, 3vw, 60px); min-height: 650px; }
 .hero .hero-copy { z-index: 2; align-self: center; padding: 44px 0 72px; }
@@ -73,9 +78,12 @@
 
 @media (max-width: 760px) {
   .hero .hero-frame { padding: 23px 24px 38px; }
-  .hero .hero-header { padding-bottom: 17px; }
-  .hero .hero-header-mark { display: none; }
-  .hero .hero-site-nav { width: 100%; justify-content: space-between; gap: 9px; font-size: 10px; letter-spacing: .05em; }
+  .hero .hero-header { display: grid; grid-template-columns: 1fr auto; gap: 13px; padding-bottom: 15px; }
+  .hero .hero-header-mark { display: block; grid-column: 1; grid-row: 1; font-size: 18px; }
+  .hero .hero-header-controls { display: contents; }
+  .hero .hero-site-nav { grid-column: 1 / 3; grid-row: 2; width: 100%; justify-content: space-between; gap: 6px; font-size: clamp(8px, 2.6vw, 10px); letter-spacing: .04em; }
+  .hero .hero-site-nav a::after { bottom: -9px; }
+  .hero .language-switcher { grid-column: 2; grid-row: 1; }
   .hero .hero-layout { display: flex; flex-direction: column; min-height: 0; }
   .hero .hero-copy { align-self: stretch; padding: 53px 0 0; }
   .hero .hero-role-label { margin-bottom: 29px; font-size: 10px; letter-spacing: .14em; }

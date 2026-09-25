@@ -9,6 +9,30 @@ import { contactHref } from './components/Buttons';
 import { MarqueeSection } from './sections/MarqueeSection';
 import { CvPage } from './sections/CvPage';
 import { PortfolioAssistant } from './components/PortfolioAssistant';
+import { LanguageProvider, useLanguage } from './context/LanguageContext';
+
+function PortfolioPage() {
+  const { language } = useLanguage();
+
+  return (
+    <MotionConfig reducedMotion="user">
+      <a className="skip-link" href="#about">{language === 'vi' ? 'Bỏ qua đến nội dung' : 'Skip to content'}</a>
+      <main className="overflow-x-clip bg-ink" lang={language}>
+        <HeroSection />
+        <MarqueeSection />
+        <AboutSection />
+        <ExperimentSection />
+        <ProjectsSection />
+        <footer className="site-footer">
+          <span>Nam © {new Date().getFullYear()}</span>
+          <a href={contactHref}>{language === 'vi' ? 'Cùng xây dựng điều gì đó' : 'Let’s build something'} <ArrowUpRight size={16} aria-hidden="true" /></a>
+          <a href="#top">{language === 'vi' ? 'Lên đầu trang ↑' : 'Back to top ↑'}</a>
+        </footer>
+      </main>
+      <PortfolioAssistant />
+    </MotionConfig>
+  );
+}
 
 export default function App() {
   useEffect(() => {
@@ -25,21 +49,8 @@ export default function App() {
   if (/^\/cv\/?$/.test(window.location.pathname)) return <CvPage />;
 
   return (
-    <MotionConfig reducedMotion="user">
-      <a className="skip-link" href="#about">Skip to content</a>
-      <main className="overflow-x-clip bg-ink">
-        <HeroSection />
-        <MarqueeSection />
-        <AboutSection />
-        <ExperimentSection />
-        <ProjectsSection />
-        <footer className="site-footer">
-          <span>Nam © {new Date().getFullYear()}</span>
-          <a href={contactHref}>Let&apos;s build something <ArrowUpRight size={16} aria-hidden="true" /></a>
-          <a href="#top">Back to top ↑</a>
-        </footer>
-      </main>
-      <PortfolioAssistant />
-    </MotionConfig>
+    <LanguageProvider>
+      <PortfolioPage />
+    </LanguageProvider>
   );
 }

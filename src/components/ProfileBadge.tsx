@@ -3,8 +3,11 @@ import { motion, useInView, useReducedMotion, useTransform } from 'framer-motion
 import { Pause, Play } from 'lucide-react';
 import { HeroMascot } from './HeroMascot';
 import { useBadgeScene } from './useBadgeScene';
+import { useLanguage } from '../context/LanguageContext';
 
 export function ProfileBadge() {
+  const { language } = useLanguage();
+  const isVietnamese = language === 'vi';
   const stage = useRef<HTMLDivElement>(null);
   const tether = useRef<SVGSVGElement>(null);
   const badge = useRef<HTMLDivElement>(null);
@@ -109,24 +112,24 @@ export function ProfileBadge() {
               <img src="/images/NguenPhuongNamv2.png" alt="Nguyen Phuong Nam" width="1086" height="1448"
                 draggable={false} className="hero-id-photo" />
               <div className="hero-id-shade" aria-hidden="true" />
-              <div className="hero-id-topline" aria-hidden="true"><span>NPN / IDENTITY</span><span>01 — 01</span></div>
+              <div className="hero-id-topline" aria-hidden="true"><span>{isVietnamese ? 'NPN / NHẬN DIỆN' : 'NPN / IDENTITY'}</span><span>01 — 01</span></div>
               <div className="hero-id-identity">
                 <span className="hero-id-rule" aria-hidden="true" />
                 <p className="hero-id-name">NGUYEN<br />PHUONG NAM</p>
-                <p className="hero-id-role">AI ENGINEER / SOFTWARE DEVELOPER</p>
+                <p className="hero-id-role">{isVietnamese ? 'KỸ SƯ AI / NHÀ PHÁT TRIỂN PHẦN MỀM' : 'AI ENGINEER / SOFTWARE DEVELOPER'}</p>
               </div>
             </motion.div>
           </motion.div>
           <HeroMascot clock={clock} reducedMotion={Boolean(reducedMotion)} />
           {!reducedMotion && <button type="button" className="hero-scene-control"
-            aria-label={paused ? 'Play hero animation' : 'Pause hero animation'} aria-pressed={paused}
+            aria-label={paused ? (isVietnamese ? 'Phát hoạt ảnh hero' : 'Play hero animation') : (isVietnamese ? 'Tạm dừng hoạt ảnh hero' : 'Pause hero animation')} aria-pressed={paused}
             onClick={() => setPaused(value => !value)}>
             {paused ? <Play size={11} aria-hidden="true" /> : <Pause size={11} aria-hidden="true" />}
-            <span>{paused ? 'Play' : 'Pause'}</span>
+            <span>{paused ? (isVietnamese ? 'Phát' : 'Play') : (isVietnamese ? 'Dừng' : 'Pause')}</span>
           </button>}
         </div>
       </motion.div>
-      <span className="hero-badge-side-note" aria-hidden="true">PROFILE / 001</span>
+      <span className="hero-badge-side-note" aria-hidden="true">{isVietnamese ? 'HỒ SƠ / 001' : 'PROFILE / 001'}</span>
     </div>
   );
 }

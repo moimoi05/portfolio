@@ -17,12 +17,14 @@ const jsonResponse = (body: unknown, ok = true) => ({
 describe('portfolio assistant', () => {
   beforeEach(() => {
     vi.stubGlobal('fetch', vi.fn());
+    window.localStorage.clear();
   });
 
   afterEach(() => {
     cleanup();
     vi.unstubAllGlobals();
     vi.restoreAllMocks();
+    window.localStorage.clear();
     window.history.replaceState(null, '', '/');
   });
 
@@ -36,9 +38,9 @@ describe('portfolio assistant', () => {
     await user.click(launcher);
 
     expect(screen.getByRole('dialog', { name: /nam's portfolio assistant/i })).toBeInTheDocument();
-    expect(screen.getByText(/ask me about his experience, projects, skills, or research/i)).toBeInTheDocument();
+    expect(screen.getByText(/ask about his experience, projects, skills, or research/i)).toBeInTheDocument();
 
-    await user.click(screen.getByRole('button', { name: /close assistant/i }));
+    await user.click(screen.getByRole('button', { name: /minimize chat/i }));
     expect(screen.queryByRole('dialog', { name: /nam's portfolio assistant/i })).not.toBeInTheDocument();
   });
 
@@ -89,5 +91,27 @@ describe('portfolio assistant', () => {
 
     expect(await screen.findByText(/couldn't reach the assistant/i)).toBeInTheDocument();
     expect(screen.queryByText(/internal endpoint details/i)).not.toBeInTheDocument();
+  });
+
+  it('collapses on outside click and restores the cached conversation when opened again', async () => {
+    const user = userEvent.setup();
+    vi.mocked(fetch).mockResolvedValue(jsonResponse({ message: 'Nam studies artificial intelligence.' }));
+    const view = render(<><button type="button">Outside area</button><App /></>);
+
+    await user.click(screen.getByRole('button', { name: /ask ai about nam/i }));
+    await user.type(screen.getByRole('textbox', { name: /your message/i }), 'What does Nam study?');
+    await user.click(screen.getByRole('button', { name: /^send question$/i }));
+    expect(await screen.findByText('Nam studies artificial intelligence.')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Outside area' }));
+    expect(screen.queryByRole('dialog', { name: /nam's portfolio assistant/i })).not.toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: /ask ai about nam/i }));
+    expect(screen.getByText('Nam studies artificial intelligence.')).toBeInTheDocument();
+
+    view.unmount();
+    render(<App />);
+    expect(screen.getByRole('button', { name: /ask ai about nam/i })).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: /ask ai about nam/i }));
+    expect(screen.getByText('Nam studies artificial intelligence.')).toBeInTheDocument();
   });
 });

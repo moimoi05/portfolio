@@ -53,6 +53,26 @@ describe('Nam portfolio', () => {
     expect(navigation.getByRole('link', { name: 'Contact' })).toHaveAttribute('href', contactHref);
   });
 
+  it('switches the portfolio and assistant copy to Vietnamese', () => {
+    window.localStorage.removeItem('portfolio-language');
+    render(<App />);
+    fireEvent.click(screen.getByRole('button', { name: 'Tiếng Việt' }));
+
+    expect(document.documentElement).toHaveAttribute('lang', 'vi');
+    expect(screen.getByRole('navigation', { name: 'Điều hướng chính' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Giới thiệu' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Thử nghiệm' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Dự án tiêu biểu' })).toBeInTheDocument();
+    expect(screen.getAllByText('Bài báo nguồn')).toHaveLength(2);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Hỏi AI về Nam' }));
+    expect(screen.getByRole('dialog', { name: 'Trợ lý portfolio của Nam' })).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Tin nhắn của bạn' })).toHaveAttribute('placeholder', 'Hỏi về công việc của Nam…');
+
+    fireEvent.click(screen.getByRole('button', { name: 'English' }));
+    expect(document.documentElement).toHaveAttribute('lang', 'en');
+  });
+
   it('uses Nam’s actual profile and preserves the email contact links', () => {
     render(<App />);
     const about = within(document.getElementById('about')!);
@@ -61,7 +81,7 @@ describe('Nam portfolio', () => {
     expect(about.getByText('Central Military Hospital 108')).toBeInTheDocument();
     expect(screen.queryByText(/five years of experience/)).not.toBeInTheDocument();
     expect(about.getByRole('link', { name: /contact me/i })).toHaveAttribute('href', contactHref);
-    expect(screen.getByRole('link', { name: /let's build something/i })).toHaveAttribute('href', contactHref);
+    expect(screen.getByRole('link', { name: /let.s build something/i })).toHaveAttribute('href', contactHref);
   });
 
   it('presents side builds under Experiment without fictional achievements', () => {
