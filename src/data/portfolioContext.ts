@@ -31,5 +31,5 @@ Technical skills listed on the portfolio and CV
 - Data and tools: NumPy, Matplotlib, SQL, NoSQL, Docker, Colab, CI/CD, REST APIs, WebSockets.
 
 Other portfolio work
-- Experiments include service websites, workflow automation, AI-assisted utilities, and data processing tools.
+- The Experience section includes service websites, workflow automation, AI-assisted utilities, and data processing tools.
 `.trim();

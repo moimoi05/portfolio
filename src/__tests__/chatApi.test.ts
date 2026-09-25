@@ -1,11 +1,11 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { VercelRequest, VercelResponse } from '../../api/types';
 
-const { generateContent } = vi.hoisted(() => ({ generateContent: vi.fn() }));
+const { createInteraction } = vi.hoisted(() => ({ createInteraction: vi.fn() }));
 
 vi.mock('@google/genai', () => ({
   GoogleGenAI: class {
-    models = { generateContent };
+    interactions = { create: createInteraction };
     constructor(_options: { apiKey: string }) {}
   },
 }));
@@ -43,7 +43,7 @@ describe('POST /api/chat', () => {
   beforeEach(() => {
     process.env.GEMINI_API_KEY = 'test-only-placeholder';
     delete process.env.GEMINI_MODEL;
-    generateContent.mockReset();
+    createInteraction.mockReset();
   });
 
   afterEach(() => {
@@ -81,7 +81,7 @@ describe('POST /api/chat', () => {
     const longResponse = makeResponse();
     await chatHandler(makeRequest({ message: 'a'.repeat(1201) }), longResponse);
     expect(longResponse.statusCode).toBe(400);
-    expect(generateContent).not.toHaveBeenCalled();
+    expect(createInteraction).not.toHaveBeenCalled();
   });
 
   it('requires a server-side API key and never returns internal details', async () => {
@@ -90,31 +90,33 @@ describe('POST /api/chat', () => {
     await chatHandler(makeRequest({ message: 'What does Nam study?' }), response);
     expect(response.statusCode).toBe(503);
     expect(response.data).toEqual({ error: expect.stringMatching(/not configured/i) });
-    expect(generateContent).not.toHaveBeenCalled();
+    expect(createInteraction).not.toHaveBeenCalled();
   });
 
-  it('uses the configured Flash model and grounded portfolio context', async () => {
+  it('uses the configured Flash model through Interactions with grounded context and low reasoning', async () => {
     process.env.GEMINI_MODEL = 'gemini-3.8-flash';
-    generateContent.mockResolvedValue({ text: 'Nam studies Artificial Intelligence at UET.' });
+    createInteraction.mockResolvedValue({ output_text: 'Nam studies Artificial Intelligence at UET.' });
     const response = makeResponse();
 
     await chatHandler(makeRequest({ message: 'What does Nam study?' }), response);
 
     expect(response.statusCode).toBe(200);
     expect(response.data).toEqual({ message: 'Nam studies Artificial Intelligence at UET.' });
-    expect(generateContent).toHaveBeenCalledWith(expect.objectContaining({
+    expect(createInteraction).toHaveBeenCalledWith(expect.objectContaining({
       model: 'gemini-3.8-flash',
-      contents: expect.arrayContaining([expect.objectContaining({ role: 'user' })]),
-      config: expect.objectContaining({
-        maxOutputTokens: expect.any(Number),
-        systemInstruction: expect.stringContaining('University of Engineering and Technology'),
+      input: 'What does Nam study?',
+      store: false,
+      system_instruction: expect.stringContaining('University of Engineering and Technology'),
+      generation_config: expect.objectContaining({
+        thinking_level: 'low',
+        max_output_tokens: expect.any(Number),
       }),
     }));
     expect(response.headers['Cache-Control']).toBe('no-store');
   });
 
   it('returns a generic error if Gemini fails', async () => {
-    generateContent.mockRejectedValue(new Error('private provider response detail'));
+    createInteraction.mockRejectedValue(new Error('private provider response detail'));
     const log = vi.spyOn(console, 'error').mockImplementation(() => undefined);
     const response = makeResponse();
 
@@ -123,5 +125,27 @@ describe('POST /api/chat', () => {
     expect(response.statusCode).toBe(502);
     expect(JSON.stringify(response.data)).not.toContain('private provider response detail');
     expect(log).toHaveBeenCalled();
+  });
+
+  it('rate limits repeated requests from the same client before calling Gemini again', async () => {
+    createInteraction.mockResolvedValue({ output_text: 'A concise portfolio answer.' });
+    const headers = {
+      'content-type': 'application/json',
+      'content-length': '29',
+      'x-forwarded-for': '203.0.113.42',
+    };
+
+    for (let index = 0; index < 12; index += 1) {
+      const response = makeResponse();
+      await chatHandler(makeRequest({ message: 'Tell me about Nam' }, { headers }), response);
+      expect(response.statusCode).toBe(200);
+    }
+
+    const limited = makeResponse();
+    await chatHandler(makeRequest({ message: 'Tell me about Nam' }, { headers }), limited);
+
+    expect(limited.statusCode).toBe(429);
+    expect(limited.headers['Retry-After']).toMatch(/^\d+$/);
+    expect(createInteraction).toHaveBeenCalledTimes(12);
   });
 });

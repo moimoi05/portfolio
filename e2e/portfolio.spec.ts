@@ -11,8 +11,11 @@ test('CV opens as a page and serves the original PDF', async ({ page }) => {
   expect(response.status()).toBe(200);
   expect((await response.body()).subarray(0, 5).toString()).toBe('%PDF-');
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
-  await page.getByRole('link', { name: 'Back to portfolio' }).click();
+  await page.getByRole('button', { name: 'Tiếng Việt' }).click();
+  await expect(page.getByRole('heading', { name: 'Học vấn & thành tích' })).toBeVisible();
+  await page.getByRole('link', { name: 'Quay lại portfolio' }).click();
   await expect(page).toHaveURL(/\/#about$/);
+  await expect(page.getByRole('navigation').getByRole('link', { name: 'Kinh nghiệm' })).toBeVisible();
 });
 
 test('both research projects show loaded, attributed paper figures', async ({ page }) => {
@@ -36,9 +39,9 @@ test('Nam portfolio has working navigation, real screenshots, and no horizontal 
   await expect(page.getByRole('heading', { level: 1, name: /building\s*intelligence/i })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Contact Me' }).first()).toHaveAttribute('href', 'mailto:nnam.hp2005@gmail.com');
   await expect.poll(() => page.locator('.hero-id-photo').evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)).toBe(true);
-  await page.getByRole('navigation').getByRole('link', { name: 'Experiment' }).click();
-  await expect(page).toHaveURL(/#experiment$/);
-  await expect(page.getByRole('heading', { name: 'Experiment', exact: true })).toBeInViewport();
+  await page.getByRole('navigation').getByRole('link', { name: 'Experience' }).click();
+  await expect(page).toHaveURL(/#experience$/);
+  await expect(page.getByRole('heading', { name: 'Experience', exact: true })).toBeInViewport();
   await page.goto('/#projects');
   const card = page.getByRole('article', { name: 'GUU & T DESIGN' });
   await card.scrollIntoViewIfNeeded();
@@ -50,10 +53,12 @@ test('Nam portfolio has working navigation, real screenshots, and no horizontal 
   expect(errors).toEqual([]);
 });
 
-test('the old services bookmark redirects to Experiment', async ({ page }) => {
+test('the old services and experiment bookmarks redirect to Experience', async ({ page }) => {
   await page.goto('/#services');
-  await expect(page).toHaveURL(/#experiment$/);
-  await expect(page.getByRole('heading', { name: 'Experiment', exact: true })).toBeInViewport();
+  await expect(page).toHaveURL(/#experience$/);
+  await expect(page.getByRole('heading', { name: 'Experience', exact: true })).toBeInViewport();
+  await page.goto('/#experiment');
+  await expect(page).toHaveURL(/#experience$/);
 });
 
 test('reduced motion keeps profile text and keyboard navigation accessible', async ({ page }) => {

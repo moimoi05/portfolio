@@ -20,9 +20,9 @@ export function ExperimentSection() {
   const experiments = isVietnamese ? experimentsVi : experimentsEn;
 
   return (
-    <section id="experiment" aria-labelledby="experiment-title" className="experiment-section">
+    <section id="experience" aria-labelledby="experience-title" className="experiment-section">
       <div className="section-eyebrow"><span>{isVietnamese ? 'Ngoài công việc chính' : 'Outside the main work'}</span><span>{isVietnamese ? 'Phòng lab / Dự án nhỏ' : 'Lab / Side builds'}</span></div>
-      <FadeIn><h2 id="experiment-title" className="hero-heading section-heading experiment-heading">{isVietnamese ? 'Thử nghiệm' : 'Experiment'}</h2></FadeIn>
+      <FadeIn><h2 id="experience-title" className="hero-heading section-heading experiment-heading">{isVietnamese ? 'Kinh nghiệm' : 'Experience'}</h2></FadeIn>
       <FadeIn><p className="experiment-intro">{isVietnamese ? 'Các sản phẩm nhỏ, website cho khách hàng, công cụ nội bộ và thử nghiệm tự động hóa — nơi tôi kiểm chứng ý tưởng và biến chúng thành hệ thống hữu ích.' : 'Smaller builds, client-facing websites, internal tools, and automation experiments — a place to test ideas and turn them into useful systems.'}</p></FadeIn>
       <ol className="experiment-list">
         {experiments.map((item, index) => <FadeIn as="li" key={item.name} delay={index * 0.06} className="experiment-row">

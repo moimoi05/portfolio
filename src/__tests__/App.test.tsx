@@ -27,17 +27,23 @@ describe('Nam portfolio', () => {
     }
   });
 
-  it('opens a dedicated CV page with the original PDF and readable preview', () => {
+  it('opens a bilingual CV page, syncs its language choice, and serves the original PDF', () => {
+    window.localStorage.removeItem('portfolio-language');
     window.history.replaceState(null, '', '/cv');
     const { unmount } = render(<App />);
     expect(screen.getByRole('heading', { level: 1, name: 'Nguyen Phuong Nam' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /open original pdf/i })).toHaveAttribute('href', '/cv/CV_Nguyen_Phuong_Nam.pdf');
     expect(screen.getByRole('img', { name: /curriculum vitae/i })).toHaveAttribute('src', '/cv/cv-preview.webp');
     expect(screen.getByRole('link', { name: /back to portfolio/i })).toHaveAttribute('href', '/#about');
+    fireEvent.click(screen.getByRole('button', { name: 'Tiếng Việt' }));
+    expect(window.localStorage.getItem('portfolio-language')).toBe('vi');
+    expect(screen.getByRole('link', { name: /quay lại portfolio/i })).toHaveAttribute('href', '/#about');
+    expect(screen.getByRole('heading', { name: 'Học vấn & thành tích' })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'English' }));
     unmount();
     window.history.replaceState(null, '', '/');
   });
-  it('presents the new hero while preserving navigation to Experiment', () => {
+  it('presents the new hero while preserving navigation to Experience', () => {
     render(<App />);
     const hero = within(document.getElementById('top')!);
     expect(hero.getByRole('heading', { level: 1 })).toHaveTextContent(/BUILDING\s*INTELLIGENCE\./);
@@ -45,7 +51,7 @@ describe('Nam portfolio', () => {
     expect(hero.getByRole('link', { name: /view my work/i })).toHaveAttribute('href', '#projects');
     expect(hero.getByRole('link', { name: /contact me/i })).toHaveAttribute('href', contactHref);
     const navigation = within(screen.getByRole('navigation', { name: /primary/i }));
-    for (const [name, sectionId] of [['About', 'about'], ['Experiment', 'experiment'], ['Projects', 'projects']]) {
+    for (const [name, sectionId] of [['About', 'about'], ['Experience', 'experience'], ['Projects', 'projects']]) {
       expect(navigation.getByRole('link', { name })).toHaveAttribute('href', `#${sectionId}`);
       expect(document.getElementById(sectionId)).toBeInTheDocument();
     }
@@ -61,7 +67,7 @@ describe('Nam portfolio', () => {
     expect(document.documentElement).toHaveAttribute('lang', 'vi');
     expect(screen.getByRole('navigation', { name: 'Điều hướng chính' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Giới thiệu' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Thử nghiệm' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Kinh nghiệm' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Dự án tiêu biểu' })).toBeInTheDocument();
     expect(screen.getAllByText('Bài báo nguồn')).toHaveLength(2);
 
@@ -84,10 +90,10 @@ describe('Nam portfolio', () => {
     expect(screen.getByRole('link', { name: /let.s build something/i })).toHaveAttribute('href', contactHref);
   });
 
-  it('presents side builds under Experiment without fictional achievements', () => {
+  it('presents side builds under Experience without fictional achievements', () => {
     render(<App />);
-    const experiment = within(document.getElementById('experiment')!);
-    expect(experiment.getByRole('heading', { name: 'Experiment' })).toBeInTheDocument();
+    const experiment = within(document.getElementById('experience')!);
+    expect(experiment.getByRole('heading', { name: 'Experience' })).toBeInTheDocument();
     for (const name of ['Service websites', 'Workflow automation', 'AI-assisted utilities', 'Data processing tools']) {
       expect(experiment.getByRole('heading', { name })).toBeInTheDocument();
     }

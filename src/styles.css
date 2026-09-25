@@ -148,6 +148,8 @@ button { cursor: pointer; }
 .experiment-number { color: #101112; font-size: clamp(60px, 8vw, 120px); font-weight: 600; letter-spacing: -.07em; line-height: 1; }
 .experiment-name h3 { font-weight: 600; font-size: clamp(28px, 3vw, 46px); }
 .cv-page { max-width: 1300px; margin: auto; padding: 36px clamp(20px, 4vw, 64px) 80px; }
+.cv-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.cv-toolbar .language-switcher { position: relative; z-index: 2; }
 .cv-back { display: inline-flex; align-items: center; gap: 12px; color: #a6b0b7; font-size: 14px; }
 .cv-header { padding: 50px 0 36px; }
 .cv-header .section-eyebrow { margin-bottom: 15px; }

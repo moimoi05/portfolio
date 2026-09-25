@@ -19,7 +19,7 @@ export function HeroSection() {
           <span className="hero-header-mark" aria-hidden="true">NPN</span>
           <div className="hero-header-controls">
             <nav aria-label={isVietnamese ? 'Điều hướng chính' : 'Primary'} className="hero-site-nav">
-              <a href="#about">{isVietnamese ? 'Giới thiệu' : 'About'}</a><a href="#experiment">{isVietnamese ? 'Thử nghiệm' : 'Experiment'}</a><a href="#projects">{isVietnamese ? 'Dự án' : 'Projects'}</a><a href={contactHref}>{isVietnamese ? 'Liên hệ' : 'Contact'}</a>
+              <a href="#about">{isVietnamese ? 'Giới thiệu' : 'About'}</a><a href="#experience">{isVietnamese ? 'Kinh nghiệm' : 'Experience'}</a><a href="#projects">{isVietnamese ? 'Dự án' : 'Projects'}</a><a href={contactHref}>{isVietnamese ? 'Liên hệ' : 'Contact'}</a>
             </nav>
             <LanguageSwitcher />
           </div>

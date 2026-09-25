@@ -37,20 +37,18 @@ function PortfolioPage() {
 export default function App() {
   useEffect(() => {
     const migrateSection = () => {
-      if (window.location.hash !== '#services') return;
-      window.history.replaceState(null, '', '#experiment');
-      document.getElementById('experiment')?.scrollIntoView({ behavior: 'instant' });
+      if (window.location.hash !== '#services' && window.location.hash !== '#experiment') return;
+      window.history.replaceState(null, '', '#experience');
+      document.getElementById('experience')?.scrollIntoView({ behavior: 'instant' });
     };
     migrateSection();
     window.addEventListener('hashchange', migrateSection);
     return () => window.removeEventListener('hashchange', migrateSection);
   }, []);
 
-  if (/^\/cv\/?$/.test(window.location.pathname)) return <CvPage />;
-
   return (
     <LanguageProvider>
-      <PortfolioPage />
+      {/^\/cv\/?$/.test(window.location.pathname) ? <CvPage /> : <PortfolioPage />}
     </LanguageProvider>
   );
 }
