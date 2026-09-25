@@ -28,7 +28,7 @@ export function CvPage() {
           <h2 id="cv-education-title">Education & recognition</h2>
           <div className="cv-entry">
             <div className="cv-entry-heading"><h3>University of Engineering and Technology, VNU Hanoi</h3><span>Sep 2023 – Dec 2026</span></div>
-            <p className="cv-entry-role">B.S. in Artificial Intelligence · GPA 3.28 · IELTS 6.0</p>
+            <p className="cv-entry-role">Major: Artificial Intelligence · GPA 3.28 · IELTS 6.0</p>
             <p>Top 10% Finalist, Naver Hackathon; Consolation Prize, UET Makathon; Outstanding Student Certificate (2026).</p>
             <p>Portfolio: <a href="https://nnam05.id.vn/" target="_blank" rel="noopener noreferrer">nnam05.id.vn</a></p>
           </div>

@@ -8,6 +8,7 @@ import { ProjectsSection } from './sections/ProjectsSection';
 import { contactHref } from './components/Buttons';
 import { MarqueeSection } from './sections/MarqueeSection';
 import { CvPage } from './sections/CvPage';
+import { PortfolioAssistant } from './components/PortfolioAssistant';
 
 export default function App() {
   useEffect(() => {
@@ -38,6 +39,7 @@ export default function App() {
           <a href="#top">Back to top ↑</a>
         </footer>
       </main>
+      <PortfolioAssistant />
     </MotionConfig>
   );
 }
