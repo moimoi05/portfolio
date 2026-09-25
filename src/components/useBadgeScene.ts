@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { animate, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import type { AnimationPlaybackControls } from 'framer-motion';
 
@@ -48,15 +48,28 @@ export function useBadgeScene(active: boolean, reducedMotion: boolean, compact: 
     return () => { cancelled = true; animations.current.forEach(animation => animation.stop()); };
   }, [active, compact, dragging, paused, reducedMotion, x, y, clock, rotate, lagX, lagY]);
 
-  const startDrag = () => {
+  const startDrag = useCallback(() => {
     animations.current.forEach(animation => animation.stop());
     clock.set(0);
     setDragging(true);
-  };
-  const finishDrag = (velocity = { x: 0, y: 0 }) => {
+  }, [clock]);
+  const finishDrag = useCallback((velocity = { x: 0, y: 0 }) => {
     releaseVelocity.current = { x: clamp(velocity.x, 90), y: clamp(velocity.y, 65) };
     setDragging(false);
-  };
+  }, []);
+
+  useEffect(() => {
+    const cancelDrag = () => finishDrag();
+    const visibilityChanged = () => { if (document.hidden) cancelDrag(); };
+    window.addEventListener('blur', cancelDrag);
+    window.addEventListener('pointerup', cancelDrag);
+    document.addEventListener('visibilitychange', visibilityChanged);
+    return () => {
+      window.removeEventListener('blur', cancelDrag);
+      window.removeEventListener('pointerup', cancelDrag);
+      document.removeEventListener('visibilitychange', visibilityChanged);
+    };
+  }, [finishDrag]);
 
   return { x, y, rotate, lagX, lagY, clock, paused, setPaused, startDrag, finishDrag };
 }

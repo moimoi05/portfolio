@@ -1,0 +1,30 @@
+.hero .hero-scenery { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.hero .hero-scene-floor { position: absolute; right: -15%; bottom: -14%; left: -15%; height: 41%; transform: perspective(550px) rotateX(53deg); transform-origin: center bottom; background: radial-gradient(ellipse at 72% 22%, #ae62ff2b, transparent 40%), repeating-linear-gradient(0deg, transparent 0 63px, #b083e81a 64px 65px), repeating-linear-gradient(90deg, transparent 0 119px, #b083e817 120px 121px); mask-image: linear-gradient(transparent, #000 32%, #000 68%, transparent); }
+.hero .hero-light-orbit { position: absolute; border: 1px solid #b66cfd80; border-radius: 50%; box-shadow: 0 0 8px #bd82ff45, inset 0 0 7px #bd82ff30; transform: rotate(-12deg); }
+.hero .hero-light-orbit--outer { right: -8%; bottom: 9%; width: 71%; height: 17%; border-top-color: #aa78d214; border-left-color: #aa78d214; }
+.hero .hero-light-orbit--inner { right: 4%; bottom: 13%; width: 44%; height: 8%; opacity: .34; }
+.hero .hero-glass-pane { position: absolute; width: 235px; height: 156px; padding: 25px 22px; border: 1px solid #a474da26; border-radius: 12px; background: linear-gradient(145deg, #2d164b16, #0f0b1809); box-shadow: inset 0 0 0 4px #9872ba06, 0 0 20px #9160c40d; transform: perspective(700px) rotateY(-28deg) rotateZ(-13deg); }
+.hero .hero-glass-pane--back { top: 17%; right: -90px; opacity: .48; }
+.hero .hero-glass-pane--front { top: 39%; right: -65px; opacity: .38; }
+.hero .hero-glass-pane i { display: block; width: 70%; height: 3px; margin-bottom: 10px; border-radius: 5px; background: linear-gradient(90deg, #bc81e66b 12%, transparent 13% 17%, #8d69b941 18%); }
+.hero .hero-glass-pane i:nth-child(even) { width: 91%; margin-left: 8px; opacity: .7; }
+.hero .hero-glass-pane i:nth-child(3n) { width: 46%; }
+.hero .hero-glass-cube { position: absolute; width: 44px; height: 52px; border: 1px solid #ba84e546; border-radius: 4px; background: linear-gradient(125deg, #cf9eff25, #5b267511 45%, #ad63eb28); box-shadow: inset 1px 1px 8px #cda6ff15, 9px 12px 20px #aa54fb10; transform: skewY(-9deg); }
+.hero .hero-glass-cube::before { content: ''; position: absolute; top: -8px; right: -1px; left: 0; height: 8px; border: 1px solid #a369d53b; background: #c08af02b; transform: skewX(-40deg); transform-origin: bottom; }
+.hero .hero-glass-cube::after { content: ''; position: absolute; top: 0; bottom: 0; left: 12px; width: 1px; background: #dfb9ff21; }
+.hero .hero-glass-cube--one { bottom: 19%; left: -20px; opacity: .55; }
+.hero .hero-glass-cube--two { bottom: 7%; left: 53%; width: 32px; height: 38px; }
+.hero .hero-glass-cube--three { bottom: 15%; right: 1%; width: 38px; height: 57px; opacity: .65; }
+.hero .hero-spark { position: absolute; width: 2px; height: 2px; background: #ddbeff; border-radius: 50%; box-shadow: 0 0 8px 1px #aa62ed; }
+.hero .hero-spark--one { top: 28%; left: 49%; }
+.hero .hero-spark--two { top: 66%; left: 54%; }
+.hero .hero-spark--three { top: 14%; right: 17%; }
+@media (max-width: 1080px) {
+  .hero .hero-glass-pane { opacity: .16; }
+}
+@media (max-width: 760px) {
+  .hero .hero-glass-pane, .hero .hero-glass-cube--one, .hero .hero-glass-cube--three { display: none; }
+  .hero .hero-light-orbit--outer { right: -24%; bottom: 8%; width: 115%; height: 7%; }
+  .hero .hero-light-orbit--inner { bottom: 11%; }
+  .hero .hero-scene-floor { height: 24%; bottom: -6%; }
+}

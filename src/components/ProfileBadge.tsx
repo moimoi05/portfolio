@@ -8,7 +8,8 @@ export function ProfileBadge() {
   const stage = useRef<HTMLDivElement>(null);
   const tether = useRef<SVGSVGElement>(null);
   const inView = useInView(stage, { margin: '100px' });
-  const reducedMotion = useReducedMotion();
+  const initialReducedMotion = useReducedMotion();
+  const [reducedMotion, setReducedMotion] = useState(initialReducedMotion);
   const [canDrag, setCanDrag] = useState(false);
   const [pageVisible, setPageVisible] = useState(true);
   const [dimensions, setDimensions] = useState({ width: 360, height: 160 });
@@ -32,14 +33,18 @@ export function ProfileBadge() {
 
   useEffect(() => {
     const pointer = window.matchMedia('(min-width: 761px) and (hover: hover) and (pointer: fine)');
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const updateMotionPreference = () => setReducedMotion(motionPreference.matches);
     const updatePointer = () => setCanDrag(pointer.matches);
     const updateVisibility = () => setPageVisible(!document.hidden);
     updatePointer();
     updateVisibility();
     pointer.addEventListener('change', updatePointer);
+    motionPreference.addEventListener('change', updateMotionPreference);
     document.addEventListener('visibilitychange', updateVisibility);
     return () => {
       pointer.removeEventListener('change', updatePointer);
+      motionPreference.removeEventListener('change', updateMotionPreference);
       document.removeEventListener('visibilitychange', updateVisibility);
     };
   }, []);
@@ -63,14 +68,15 @@ export function ProfileBadge() {
         transition={{ duration: reducedMotion ? 0 : 0.9, delay: 0.52, ease: [0.25, 0.1, 0.25, 1] }}>
         <div className="hero-badge-rig">
           <svg ref={tether} className="hero-tether" aria-hidden="true">
-            <motion.path d={strapPath} fill="none" stroke="#171c21" strokeWidth="15" strokeLinecap="round" />
-            <motion.path d={strapPath} fill="none" stroke="#46515b" strokeWidth="11" strokeLinecap="round" />
-            <motion.path d={strapPath} fill="none" stroke="#8a98a3" strokeWidth="1" strokeDasharray="3 5" opacity="0.6" />
+            <motion.path d={strapPath} fill="none" stroke="#82718f" strokeWidth="17" strokeLinecap="round" />
+            <motion.path d={strapPath} fill="none" stroke="#282331" strokeWidth="14" strokeLinecap="round" />
+            <motion.path d={strapPath} fill="none" stroke="#a28ab6" strokeWidth="1" strokeDasharray="2 5" opacity="0.65" />
           </svg>
           <motion.div className="hero-badge-body" style={{ x, y, rotate, transformOrigin: '50% 0%' }}
             drag={canDrag && !reducedMotion} dragElastic={0.18} dragMomentum={false}
             dragTransition={{ bounceStiffness: 52, bounceDamping: 12 }}
             dragConstraints={{ top: -48, bottom: 70, left: -75, right: 75 }}
+            onPointerDown={() => { if (canDrag && !reducedMotion) startDrag(); }}
             onDragStart={startDrag} onDragEnd={(_, info) => finishDrag(info.velocity)} onPointerCancel={() => finishDrag()}
             whileDrag={{ cursor: 'grabbing' }}>
             <div className="hero-card-connector" aria-hidden="true"><span /><i /></div>

@@ -33,9 +33,9 @@ test('Nam portfolio has working navigation, real screenshots, and no horizontal 
   page.on('pageerror', error => errors.push(error.message));
   await page.goto('/');
   await expect(page).toHaveTitle('Nam — AI Engineer & Software Developer');
-  await expect(page.getByRole('heading', { level: 1, name: /hi, i'm nam/i })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: /building\s*intelligence/i })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Contact Me' }).first()).toHaveAttribute('href', 'mailto:nnam.hp2005@gmail.com');
-  await expect.poll(() => page.locator('.hero-portrait img').evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)).toBe(true);
+  await expect.poll(() => page.locator('.hero-id-photo').evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)).toBe(true);
   await page.getByRole('navigation').getByRole('link', { name: 'Experiment' }).click();
   await expect(page).toHaveURL(/#experiment$/);
   await expect(page.getByRole('heading', { name: 'Experiment', exact: true })).toBeInViewport();

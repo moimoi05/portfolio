@@ -2,15 +2,17 @@ import { ArrowDownRight, ArrowUpRight } from 'lucide-react';
 import { FadeIn } from '../components/FadeIn';
 import { contactHref } from '../components/Buttons';
 import { ProfileBadge } from '../components/ProfileBadge';
+import { HeroBackdrop } from '../components/HeroBackdrop';
 import './HeroSection.css';
 
 export function HeroSection() {
   const scrollToContact = () => {
-    document.querySelector('.site-footer')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.querySelector('.site-footer')?.scrollIntoView({ block: 'start' });
   };
 
   return (
     <section id="top" className="hero hero--identity" aria-labelledby="hero-title">
+      <HeroBackdrop />
       <div className="hero-frame">
         <FadeIn as="header" delay={0} y={-15} className="hero-header">
           <span className="hero-header-mark" aria-hidden="true">NPN</span>

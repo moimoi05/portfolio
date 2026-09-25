@@ -4,9 +4,9 @@ import { FadeIn } from '../components/FadeIn';
 import { AnimatedText } from '../components/AnimatedText';
 
 const experience = [
-  { role: 'AI Intern · Dec 2025 — Jul 2026', place: 'Viettel High Tech', detail: 'UAV Perception and Navigation Department. Thermal and infrared target detection, with X-Plane 11 camera simulation and aerial environment integration.' },
-  { role: 'Junior Software Developer · Dec 2025 — Sep 2026', place: 'Central Military Hospital 108', detail: 'Backend systems with Golang and SQL, REST APIs, real-time communication, and a Gemini-powered RAG chatbot for medical supply management in the Equipment Department.' },
-  { role: 'Undergraduate Thesis Researcher · Present', place: 'AVITECH · VNU-UET', detail: 'Deep learning for Alzheimer’s disease prognosis using multimodal and longitudinal data to study progression over time.' },
+  { role: 'AI Intern · Dec 2025 — Jul 2026', place: 'Viettel High Tech', logo: 'viettel-high-tech.svg', detail: 'UAV Perception and Navigation Department. Thermal and infrared target detection, with X-Plane 11 camera simulation and aerial environment integration.' },
+  { role: 'Junior Software Developer · Dec 2025 — Sep 2026', place: 'Central Military Hospital 108', logo: 'hospital-108.jpg', detail: 'Backend systems with Golang and SQL, REST APIs, real-time communication, and a Gemini-powered RAG chatbot for medical supply management in the Equipment Department.' },
+  { role: 'Undergraduate Thesis Researcher · Present', place: 'AVITECH · VNU-UET', logo: 'avitech.png', detail: 'Deep learning for Alzheimer’s disease prognosis using multimodal and longitudinal data to study progression over time.' },
 ] as const;
 const technologies = ['Python', 'Golang', 'PyTorch', 'Scikit-learn', 'Hugging Face', 'YOLOv8', 'Transformers', 'NumPy', 'SQL', 'NoSQL', 'Docker', 'CI/CD'];
 const decorations = ['moon', 'lego', 'sculpture', 'ribbon'];
@@ -29,7 +29,7 @@ export function AboutSection() {
         <div><span className="fact-label">GPA</span><p className="education-gpa">3.28</p></div>
       </FadeIn>
       <div className="research-affiliation"><span className="fact-label">Research lab</span><a href="https://avitechresearch.vn/" target="_blank" rel="noopener noreferrer">AVITECH Research Group <ArrowUpRight size={16} aria-hidden="true" /></a><a href="https://avitechresearch.vn/nguyen-phuong-nam/" target="_blank" rel="noopener noreferrer">My research profile <ArrowUpRight size={16} aria-hidden="true" /></a></div>
-      <div className="experience-list" aria-label="Applied experience">{experience.map((item, index) => <FadeIn key={item.place} delay={index * 0.08} className="experience-item"><span className="experience-role">{item.role}</span><h3>{item.place}</h3><p>{item.detail}</p></FadeIn>)}</div>
+      <div className="experience-list" aria-label="Applied experience">{experience.map((item, index) => <FadeIn key={item.place} delay={index * 0.08} className="experience-item"><span className="experience-role">{item.role}</span><h3 className="experience-company"><span className="experience-logo" aria-hidden="true"><img src={`/images/companies/${item.logo}`} alt="" width="60" height="44" loading="lazy" decoding="async" /></span><span>{item.place}</span></h3><p>{item.detail}</p></FadeIn>)}</div>
       <p className="research-collaboration">Currently researching AI for rehabilitation in collaboration with the Department of Rehabilitation, Central Military Hospital 108.</p>
       <FadeIn className="toolkit"><p className="section-eyebrow">Working toolkit</p><ul aria-label="Technologies">{technologies.map(technology => <li key={technology}>{technology}</li>)}</ul></FadeIn>
     </section>
