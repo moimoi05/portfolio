@@ -9,6 +9,19 @@ const experience = [
   { role: 'Undergraduate Thesis Researcher · Present', place: 'AVITECH · VNU-UET', logo: 'avitech.png', detail: 'Deep learning for Alzheimer’s disease prognosis using multimodal and longitudinal data to study progression over time.' },
 ] as const;
 const technologies = ['Python', 'Golang', 'PyTorch', 'Scikit-learn', 'Hugging Face', 'YOLOv8', 'Transformers', 'NumPy', 'SQL', 'NoSQL', 'Docker', 'CI/CD'];
+const technologyLogos = [
+  { name: 'Python', file: 'python.svg' },
+  { name: 'Go', file: 'go.svg' },
+  { name: 'PyTorch', file: 'pytorch.svg' },
+  { name: 'scikit-learn', file: 'scikitlearn.svg' },
+  { name: 'Hugging Face · Transformers', file: 'huggingface.svg' },
+  { name: 'Ultralytics · YOLOv8', file: 'ultralytics.svg' },
+  { name: 'NumPy', file: 'numpy.svg' },
+  { name: 'SQL · PostgreSQL', file: 'postgresql.svg' },
+  { name: 'NoSQL · MongoDB', file: 'mongodb.svg' },
+  { name: 'Docker', file: 'docker.svg' },
+  { name: 'CI/CD · GitHub Actions', file: 'githubactions.svg' },
+] as const;
 const decorations = ['moon', 'lego', 'sculpture', 'ribbon'];
 
 export function AboutSection() {
@@ -31,7 +44,13 @@ export function AboutSection() {
       <div className="research-affiliation"><span className="fact-label">Research lab</span><a href="https://avitechresearch.vn/" target="_blank" rel="noopener noreferrer">AVITECH Research Group <ArrowUpRight size={16} aria-hidden="true" /></a><a href="https://avitechresearch.vn/nguyen-phuong-nam/" target="_blank" rel="noopener noreferrer">My research profile <ArrowUpRight size={16} aria-hidden="true" /></a></div>
       <div className="experience-list" aria-label="Applied experience">{experience.map((item, index) => <FadeIn key={item.place} delay={index * 0.08} className="experience-item"><span className="experience-role">{item.role}</span><h3 className="experience-company"><span className="experience-logo" aria-hidden="true"><img src={`/images/companies/${item.logo}`} alt="" width="60" height="44" loading="lazy" decoding="async" /></span><span>{item.place}</span></h3><p>{item.detail}</p></FadeIn>)}</div>
       <p className="research-collaboration">Currently researching AI for rehabilitation in collaboration with the Department of Rehabilitation, Central Military Hospital 108.</p>
-      <FadeIn className="toolkit"><p className="section-eyebrow">Working toolkit</p><ul aria-label="Technologies">{technologies.map(technology => <li key={technology}>{technology}</li>)}</ul></FadeIn>
+      <FadeIn className="toolkit">
+        <p className="section-eyebrow">Working toolkit</p>
+        <ul className="toolkit-logos" aria-label="Technology logos">
+          {technologyLogos.map(({ name, file }) => <li key={file} title={name}><img src={`/images/technologies/${file}`} alt={name} width="28" height="28" loading="lazy" decoding="async" /></li>)}
+        </ul>
+        <ul aria-label="Technologies">{technologies.map(technology => <li key={technology}>{technology}</li>)}</ul>
+      </FadeIn>
     </section>
   );
 }

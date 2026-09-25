@@ -6,10 +6,6 @@ import { HeroBackdrop } from '../components/HeroBackdrop';
 import './HeroSection.css';
 
 export function HeroSection() {
-  const scrollToContact = () => {
-    document.querySelector('.site-footer')?.scrollIntoView({ block: 'start' });
-  };
-
   return (
     <section id="top" className="hero hero--identity" aria-labelledby="hero-title">
       <HeroBackdrop />
@@ -31,7 +27,7 @@ export function HeroSection() {
             </FadeIn>
             <div className="hero-actions">
               <FadeIn delay={0.44} y={16}><a className="contact-button hero-work-button" href="#projects"><span>View my work</span><ArrowUpRight size={17} aria-hidden="true" /></a></FadeIn>
-              <FadeIn delay={0.52} y={16}><button className="live-project-button hero-contact-button" type="button" onClick={scrollToContact}><span>Contact me</span><ArrowUpRight size={17} aria-hidden="true" /></button></FadeIn>
+              <FadeIn delay={0.52} y={16}><a className="live-project-button hero-contact-button" href={contactHref}><span>Contact me</span><ArrowUpRight size={17} aria-hidden="true" /></a></FadeIn>
             </div>
           </div>
           <div className="hero-visual"><ProfileBadge /></div>

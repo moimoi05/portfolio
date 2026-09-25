@@ -10,7 +10,7 @@ test('Hero scene pauses, resumes after a click, and respects a changed motion pr
   await page.waitForTimeout(350);
   expect(await body.getAttribute('style')).toBe(frozen);
   await page.getByRole('button', { name: 'Play hero animation' }).click();
-  if (!isMobile) await page.locator('.hero-id-photo').click({ position: { x: 150, y: 100 } });
+  if (!isMobile) await page.locator('.hero-id-card').click({ position: { x: 150, y: 100 } });
   await expect.poll(() => page.locator('.hero-badge-body').evaluate(el => Math.abs(new DOMMatrix(getComputedStyle(el).transform).m41)), { timeout: 10000 }).toBeGreaterThan(12);
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await expect(pause).toHaveCount(0);

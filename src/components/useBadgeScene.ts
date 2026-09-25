@@ -9,20 +9,25 @@ const clamp = (value: number, limit: number) => Math.max(-limit, Math.min(limit,
 export function useBadgeScene(active: boolean, reducedMotion: boolean, compact: boolean) {
   const animations = useRef<AnimationPlaybackControls[]>([]);
   const releaseVelocity = useRef({ x: 0, y: 0 });
+  const gesture = useRef<'idle' | 'pressed' | 'dragging'>('idle');
   const [dragging, setDragging] = useState(false);
   const [paused, setPaused] = useState(false);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const clock = useMotionValue(0);
-  const rotationTarget = useTransform(x, [-100, 0, 100], [6, 0, -6]);
+  const rotationTarget = useTransform(x, [-100, 0, 100], [14, -4, -18]);
   const rotate = useSpring(rotationTarget, { stiffness: 70, damping: 16, mass: 1.3 });
+  const yawTarget = useTransform(x, [-100, 0, 100], [20, -7, -20]);
+  const pitchTarget = useTransform(y, [-80, 0, 80], [7, 2, -7]);
+  const rotateY = useSpring(yawTarget, { stiffness: 60, damping: 15, mass: 1.3 });
+  const rotateX = useSpring(pitchTarget, { stiffness: 55, damping: 15, mass: 1.3 });
   // Only the strap's interior lags. Its final point always stays on the metal loop.
   const lagX = useSpring(x, { stiffness: 48, damping: 12, mass: 1.1, restDelta: 0.05, restSpeed: 0.05 });
   const lagY = useSpring(y, { stiffness: 42, damping: 13, mass: 1.2, restDelta: 0.05, restSpeed: 0.05 });
 
   useEffect(() => {
     if (reducedMotion) {
-      x.jump(0); y.jump(0); rotate.jump(0); lagX.jump(0); lagY.jump(0); clock.jump(0);
+      x.jump(0); y.jump(0); rotate.jump(0); rotateX.jump(0); rotateY.jump(0); lagX.jump(0); lagY.jump(0); clock.jump(0);
       return;
     }
     if (!active || dragging || paused) return;
@@ -46,30 +51,34 @@ export function useBadgeScene(active: boolean, reducedMotion: boolean, compact: 
       ];
     });
     return () => { cancelled = true; animations.current.forEach(animation => animation.stop()); };
-  }, [active, compact, dragging, paused, reducedMotion, x, y, clock, rotate, lagX, lagY]);
+  }, [active, compact, dragging, paused, reducedMotion, x, y, clock, rotate, rotateX, rotateY, lagX, lagY]);
 
-  const startDrag = useCallback(() => {
+  const startPress = useCallback(() => {
+    gesture.current = 'pressed';
     animations.current.forEach(animation => animation.stop());
     clock.set(0);
     setDragging(true);
   }, [clock]);
+  const startDrag = useCallback(() => { gesture.current = 'dragging'; }, []);
   const finishDrag = useCallback((velocity = { x: 0, y: 0 }) => {
+    gesture.current = 'idle';
     releaseVelocity.current = { x: clamp(velocity.x, 90), y: clamp(velocity.y, 65) };
     setDragging(false);
   }, []);
 
   useEffect(() => {
     const cancelDrag = () => finishDrag();
+    const releaseClick = () => { if (gesture.current === 'pressed') finishDrag(); };
     const visibilityChanged = () => { if (document.hidden) cancelDrag(); };
     window.addEventListener('blur', cancelDrag);
-    window.addEventListener('pointerup', cancelDrag);
+    window.addEventListener('pointerup', releaseClick);
     document.addEventListener('visibilitychange', visibilityChanged);
     return () => {
       window.removeEventListener('blur', cancelDrag);
-      window.removeEventListener('pointerup', cancelDrag);
+      window.removeEventListener('pointerup', releaseClick);
       document.removeEventListener('visibilitychange', visibilityChanged);
     };
   }, [finishDrag]);
 
-  return { x, y, rotate, lagX, lagY, clock, paused, setPaused, startDrag, finishDrag };
+  return { x, y, rotate, rotateX, rotateY, lagX, lagY, clock, paused, setPaused, startPress, startDrag, finishDrag };
 }

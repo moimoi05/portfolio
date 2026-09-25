@@ -27,7 +27,7 @@ function ProjectAction({ project }: { project: SelectedProject }) {
 }
 function ProjectCard({ project, index }: { project: SelectedProject; index: number }) {
   return (
-    <div className="nam-project-slot project-stack-slot" style={{ top: `calc(var(--nam-card-top) + ${index * 14}px)` }}>
+    <div className="nam-project-slot project-stack-slot" style={{ top: `calc(var(--nam-card-top) + ${index * 14}px)`, zIndex: index + 1 }}>
       <article aria-label={project.name} className="nam-project-card">
         <div className="nam-project-header">
           <span aria-hidden="true" className="nam-project-number">{String(index + 1).padStart(2, '0')}</span>

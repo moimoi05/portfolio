@@ -43,7 +43,7 @@ describe('Nam portfolio', () => {
     expect(hero.getByRole('heading', { level: 1 })).toHaveTextContent(/BUILDING\s*INTELLIGENCE\./);
     expect(hero.getByRole('img', { name: 'Nguyen Phuong Nam' })).toHaveAttribute('src', '/images/NguenPhuongNamv2.png');
     expect(hero.getByRole('link', { name: /view my work/i })).toHaveAttribute('href', '#projects');
-    expect(hero.getByRole('button', { name: /contact me/i })).toBeInTheDocument();
+    expect(hero.getByRole('link', { name: /contact me/i })).toHaveAttribute('href', contactHref);
     const navigation = within(screen.getByRole('navigation', { name: /primary/i }));
     for (const [name, sectionId] of [['About', 'about'], ['Experiment', 'experiment'], ['Projects', 'projects']]) {
       expect(navigation.getByRole('link', { name })).toHaveAttribute('href', `#${sectionId}`);

@@ -52,7 +52,6 @@
 .nam-research-flow { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-top: 23px; padding: 16px 20px; border: 1px solid #52636e; border-radius: 10px; color: #b7c4cc; font-size: 11px; }.nam-research-flow strong { font-weight: 500; }.nam-research-map > p { margin-top: 15px; color: #84939e; font-size: 11px; }
 .nam-project-dialog { width: min(690px, calc(100vw - 32px)); max-height: calc(100dvh - 48px); margin: auto; padding: 30px; overflow-y: auto; border: 1px solid #69757c; border-radius: 24px; color: #d7e2ea; background: #111517; box-shadow: 0 30px 100px #0008; }.nam-project-dialog::backdrop { background: #000b; backdrop-filter: blur(8px); }
 .nam-dialog-top { display: flex; align-items: center; justify-content: space-between; gap: 20px; color: #a3afb7; font-size: 10px; text-transform: uppercase; letter-spacing: .08em; }.nam-dialog-top button { display: grid; place-items: center; min-width: 44px; min-height: 44px; border-radius: 50%; border: 1px solid #57646b; color: inherit; background: transparent; cursor: pointer; }.nam-project-dialog h2 { margin: 22px 0 14px; font-size: clamp(28px, 4vw, 44px); line-height: 1.05; font-weight: 500; }.nam-dialog-context { color: #b7c2c9; line-height: 1.65; font-size: 15px; font-weight: 300; }.nam-case-details > div { margin-top: 24px; padding-top: 20px; border-top: 1px solid #303c43; }.nam-case-details h3 { margin-bottom: 8px; font-size: 14px; font-weight: 500; }.nam-case-details p { color: #9daeb8; line-height: 1.65; font-size: 13px; font-weight: 300; }.nam-dialog-note { margin: 24px 0; color: #87969f; font-size: 11px; line-height: 1.6; }
-@media (min-width: 1024px) and (min-height: 880px) { .nam-project-slot { position: sticky; min-height: 78vh; padding-bottom: 28px; } }
 @media (max-width: 767px) {
   .nam-projects-section { padding-top: 75px; }.nam-projects-heading { margin-bottom: 42px; }.nam-projects-intro { font-size: 9px; letter-spacing: .07em; }.nam-projects-intro > span:last-child { text-align: right; }
   .nam-project-card { padding: 20px; border-radius: 25px; }.nam-project-header { gap: 15px; flex-wrap: wrap; }.nam-project-title { flex-basis: 65%; }.nam-project-title > p { font-size: 9px; }.nam-project-title h3 { font-size: 24px; }.nam-project-header > .nam-project-action { margin-left: auto; }
@@ -81,7 +80,6 @@
 .paper-figure figcaption { display: flex; justify-content: space-between; gap: 20px; padding: 18px 20px; }
 .paper-figure strong { display: block; font-size: 16px; font-weight: 400; margin-bottom: 5px; }.paper-figure p { font-size: 11px; color: #a5b0b9; line-height: 1.7; }
 .paper-links { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; flex-shrink: 0; font-size: 11px; }.paper-links a { display: inline-flex; gap: 6px; align-items: center; text-decoration: underline; text-underline-offset: 4px; }.paper-links a:hover { color: #fff; }
-@media (min-width: 1024px) and (min-height: 880px) { .nam-project-card { padding: 26px; }.nam-project-number { font-size: 100px; }.nam-project-meta { margin: 20px 0; }.paper-image img { height: min(26vw, 330px); } }
 @media (max-width: 767px) { .nam-project-card { padding: 20px; }.nam-project-number { font-size: 72px; }.nam-project-meta > p { line-height: 1.7; }.paper-heading { padding: 12px; font-size: 8px; }.paper-image { padding: 8px; }.paper-image img { height: 240px; }.paper-figure figcaption { flex-direction: column; padding: 14px; gap: 14px; }.paper-links { flex-direction: row; justify-content: space-between; }.paper-figure strong { font-size: 14px; }.paper-figure p { font-size: 10px; }.nam-project-header > .nam-project-action { margin-top: 5px; }.nam-project-header { gap: 16px; } }
 
 /* UAV thermal-vision concept: a vivid synthetic scan scene, clearly marked as illustrative. */
@@ -126,3 +124,30 @@
 .nam-bv108-workflow i { color: #72fbeb; font-style: normal; }
 @media (max-width: 767px) { .nam-bv108-preview { min-height: 360px; padding: 15px; }.nam-bv108-topline { align-items: flex-start; flex-direction: column; gap: 8px; font-size: 8px; }.nam-bv108-dashboard-shot { top: 26%; left: 4%; width: 83%; }.nam-bv108-catalog-shot { bottom: 18%; right: 3%; width: 60%; }.nam-bv108-shot figcaption { padding: 7px 8px; font-size: 8px; }.nam-bv108-shot figcaption strong { font-size: 8px; }.nam-bv108-workflow { left: 4%; bottom: 5%; gap: 4px; padding: 6px; font-size: 7px; }.nam-bv108-workflow span { padding: 4px 6px; } }
 @media (max-width: 399px) { .nam-bv108-preview { min-height: 325px; padding: 12px; }.nam-bv108-shot figcaption span { display: none; }.nam-bv108-workflow { max-width: 92%; } }
+
+/* A shared panel height makes every incoming card cover the entire previous
+   panel. Sticky depends on width, not a viewport-height threshold, so browser
+   zoom cannot unexpectedly turn the desktop stack into a flat list. */
+@media (min-width: 1024px) {
+  .nam-project-stack { --nam-card-height: clamp(620px, calc(100svh - 112px), 840px); --nam-card-top: min(24px, calc(100svh - var(--nam-card-height) - 80px)); }
+  .nam-project-slot { position: sticky; }
+  .nam-project-card { display: flex; flex-direction: column; height: var(--nam-card-height); padding: 26px; }
+  .nam-project-header, .nam-project-meta { flex-shrink: 0; }
+  .nam-project-number { font-size: 100px; }
+  .nam-project-meta { margin: 20px 0; }
+  .nam-project-card > :last-child { flex: 1; min-height: 0; height: auto; }
+  .nam-website-preview { grid-template-rows: repeat(2, minmax(0, 1fr)); }
+  .nam-concept-preview, .nam-uav-preview, .paper-figure { display: flex; flex-direction: column; }
+  .nam-concept-preview > figcaption, .nam-concept-note, .nam-uav-key, .paper-heading, .paper-figure figcaption { flex-shrink: 0; }
+  .nam-bv108-preview, .nam-uav-preview, .nam-uav-stage, .paper-image { flex: 1; min-height: 0; }
+  .nam-uav-scene { width: auto; max-width: 100%; height: 100%; aspect-ratio: 1120 / 470; margin: 0 auto; }
+  .paper-image img { height: 100%; }
+  .nam-bv108-dashboard-shot { height: 69%; }
+  .nam-bv108-catalog-shot { height: 57%; }
+  .nam-bv108-shot { display: flex; flex-direction: column; }
+  .nam-bv108-shot img { flex: 1; min-height: 0; aspect-ratio: auto; object-fit: cover; }
+  .nam-bv108-shot figcaption { flex-shrink: 0; }
+}
+@media (min-width: 1024px) and (prefers-reduced-motion: reduce) {
+  .nam-project-slot { position: relative; top: 0 !important; }
+}
