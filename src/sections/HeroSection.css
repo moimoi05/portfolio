@@ -96,9 +96,9 @@
   .hero .hero-badge-stage { min-height: 0; padding-bottom: 115px; }
   .hero .hero-badge-entrance { width: min(74vw, 340px); }
   .hero .hero-badge-rig { --tether-height: 98px; --badge-gap: 65px; }
-  .hero .hero-badge-body { cursor: default; }
+  .hero .hero-badge-body { cursor: grab; touch-action: none; }
   .hero .hero-badge-halo { width: min(100vw, 470px); }
-  .hero .hero-id-card { border-radius: 20px; cursor: default; }
+  .hero .hero-id-card { border-radius: 20px; cursor: grab; touch-action: none; }
   .hero .hero-id-name { font-size: clamp(25px, 6.3vw, 34px); }
   .hero .hero-badge-side-note { right: -1%; }
   .hero .hero-meta { justify-content: space-between; gap: 10px; margin-top: 8px; padding-top: 19px; }

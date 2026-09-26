@@ -37,7 +37,7 @@ export function ProfileBadge() {
   });
 
   useEffect(() => {
-    const pointer = window.matchMedia('(min-width: 761px) and (hover: hover) and (pointer: fine)');
+    const pointer = window.matchMedia('(pointer: coarse), (hover: hover) and (pointer: fine)');
     const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
     const updateMotionPreference = () => setReducedMotion(motionPreference.matches);
     const updatePointer = () => setCanDrag(pointer.matches);
