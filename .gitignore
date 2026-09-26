@@ -8,4 +8,4 @@ playwright-report/
 .env.*
 !.env.example
 artifacts/
-artifacts/
+.vercel/

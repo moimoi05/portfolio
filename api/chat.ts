@@ -1,10 +1,11 @@
 import { GoogleGenAI } from '@google/genai';
-import type { VercelRequest, VercelResponse } from './types.js';
+import type { VercelRequest, VercelResponse } from './_lib/types.js';
 import { PORTFOLIO_CONTEXT } from './_lib/portfolioContext.js';
 import {
   PORTFOLIO_ASSISTANT_MAX_BODY_BYTES,
   PORTFOLIO_ASSISTANT_MAX_MESSAGE_LENGTH,
   MAX_OUTPUT_TOKENS,
+  GEMINI_TIMEOUT_MS,
   RATE_LIMIT_MAX_REQUESTS,
   RATE_LIMIT_WINDOW_MS,
   safeModelName,
@@ -152,7 +153,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
 
   try {
     const ai = new GoogleGenAI({ apiKey });
-    const createInteraction = () => ai.interactions.create({
+    const result = await ai.interactions.create({
       model: safeModelName(),
       input: parsed.message,
       system_instruction: SYSTEM_INSTRUCTION,
@@ -161,18 +162,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
         max_output_tokens: MAX_OUTPUT_TOKENS,
       },
       store: false,
-    });
-
-    let result;
-    try {
-      result = await createInteraction();
-    } catch (error) {
-      const status = typeof error === 'object' && error !== null && 'status' in error && typeof error.status === 'number'
-        ? error.status
-        : undefined;
-      if (status === 429 || (status !== undefined && status >= 500)) result = await createInteraction();
-      else throw error;
-    }
+    }, { timeout: GEMINI_TIMEOUT_MS, maxRetries: 0 });
 
     const message = result.output_text?.trim();
     if (!message) throw new Error('Empty model response');

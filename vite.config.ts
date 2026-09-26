@@ -1,7 +1,7 @@
 import { defineConfig } from 'vitest/config';
 import { loadEnv, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
-import { createDevChatMiddleware } from './api/devChatMiddleware';
+import { createDevChatMiddleware } from './dev/chatMiddleware';
 
 function portfolioAssistantDevApi(): Plugin {
   return {
@@ -27,7 +27,8 @@ export default defineConfig(({ mode }) => {
       include: ['src/**/*.test.{ts,tsx}'],
       coverage: {
         provider: 'v8',
-        include: ['src/**/*.{ts,tsx}'],
+        include: ['src/**/*.{ts,tsx}', 'api/**/*.ts', 'dev/**/*.ts'],
+        reporter: ['text', 'json-summary', 'html'],
         exclude: ['src/__tests__/**', 'src/main.tsx', 'src/data/**'],
         thresholds: { lines: 80, functions: 80, branches: 80, statements: 80 },
       },

@@ -109,7 +109,7 @@ export function ProfileBadge() {
             whileDrag={{ cursor: 'grabbing' }}>
             <div className="hero-card-connector" aria-hidden="true"><span /><i /></div>
             <motion.div className="hero-id-card" style={{ rotateX, rotateY, transformPerspective: 900, transformOrigin: '50% 0%' }}>
-              <img src="/images/NguenPhuongNamv2.png" alt="Nguyen Phuong Nam" width="1086" height="1448"
+              <img src="/images/NguenPhuongNamv2.webp" alt="Nguyen Phuong Nam" width="1086" height="1448"
                 draggable={false} className="hero-id-photo" />
               <div className="hero-id-shade" aria-hidden="true" />
               <div className="hero-id-topline" aria-hidden="true"><span>{isVietnamese ? 'NPN / NHẬN DIỆN' : 'NPN / IDENTITY'}</span><span>01 — 01</span></div>

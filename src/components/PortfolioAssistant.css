@@ -48,5 +48,5 @@
 @media (prefers-reduced-motion: reduce) {
   .portfolio-assistant-panel { animation: none; }
   .portfolio-assistant-launcher, .portfolio-assistant-close, .portfolio-assistant-suggestions button { transition: none; }
-  .portfolio-assistant-loading svg { animation-duration: 2s; }
+  .portfolio-assistant-loading svg { animation: none; }
 }

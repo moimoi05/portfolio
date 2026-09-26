@@ -26,6 +26,7 @@ export const marqueeImages = [
 // The original source URLs above are kept for attribution and reproducibility.
 export const marqueeClips = marqueeImages.map((source, index) => ({
   source,
-  poster: `/images/reel/${index + 1}.jpg`,
+  // The final static tile shares the first poster; keep one identical asset.
+  poster: `/images/reel/${index === 20 ? 1 : index + 1}.jpg`,
   video: index < 20 ? `/videos/reel/${index + 1}.mp4` : undefined,
 }));

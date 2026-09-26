@@ -1,4 +1,4 @@
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import App from '../App';
@@ -26,6 +26,52 @@ describe('portfolio assistant', () => {
     vi.restoreAllMocks();
     window.localStorage.clear();
     window.history.replaceState(null, '', '/');
+  });
+
+  it('does not read the saved conversation until the assistant is opened', async () => {
+    const getItem = vi.spyOn(Storage.prototype, 'getItem');
+    render(<App />);
+    expect(getItem).not.toHaveBeenCalledWith('portfolio-assistant-conversation:v1');
+    await userEvent.click(screen.getByRole('button', { name: /ask ai about nam/i }));
+    await screen.findByRole('dialog');
+    expect(getItem).toHaveBeenCalledWith('portfolio-assistant-conversation:v1');
+  });
+
+  it('does not submit Enter while an IME composition is active', async () => {
+    render(<App />);
+    await userEvent.click(screen.getByRole('button', { name: /ask ai about nam/i }));
+    const input = await screen.findByRole('textbox');
+    fireEvent.change(input, { target: { value: 'Nam có kinh nghiệm gì?' } });
+    fireEvent.keyDown(input, { key: 'Enter', isComposing: true });
+    expect(fetch).not.toHaveBeenCalled();
+  });
+
+  it('does not steal keyboard focus when a reply arrives', async () => {
+    let finishRequest!: (response: Response) => void;
+    vi.mocked(fetch).mockReturnValue(new Promise(resolve => { finishRequest = resolve; }));
+    render(<App />);
+    await userEvent.click(screen.getByRole('button', { name: /ask ai about nam/i }));
+    await userEvent.click(await screen.findByRole('button', { name: /what does nam specialize in/i }));
+    const close = screen.getByRole('button', { name: /minimize chat/i });
+    close.focus();
+    finishRequest(jsonResponse({ message: 'Nam studies AI.' }));
+    await screen.findByText('Nam studies AI.');
+    expect(close).toHaveFocus();
+  });
+
+  it('blocks a second question while a request is pending', async () => {
+    let finishRequest!: (response: Response) => void;
+    vi.mocked(fetch).mockReturnValue(new Promise(resolve => { finishRequest = resolve; }));
+    render(<App />);
+    await userEvent.click(screen.getByRole('button', { name: /ask ai about nam/i }));
+    const input = await screen.findByRole('textbox');
+    fireEvent.change(input, { target: { value: 'What does Nam specialize in?' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+    fireEvent.change(input, { target: { value: 'What does Nam study?' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+    expect(fetch).toHaveBeenCalledTimes(1);
+    finishRequest(jsonResponse({ message: 'Nam studies AI.' }));
+    await screen.findByText('Nam studies AI.');
   });
 
   it('opens and closes the assistant panel', async () => {

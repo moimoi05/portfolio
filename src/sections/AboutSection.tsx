@@ -9,12 +9,12 @@ const experience = {
   en: [
     { role: 'AI Intern · Dec 2025 — Jul 2026', place: 'Viettel High Tech', logo: 'viettel-high-tech.svg', detail: 'UAV Perception and Navigation Department. Thermal and infrared target detection, with X-Plane 11 camera simulation and aerial environment integration.' },
     { role: 'Junior Software Developer · Dec 2025 — Sep 2026', place: 'Central Military Hospital 108', logo: 'hospital-108.jpg', detail: 'Backend systems with Golang and SQL, REST APIs, real-time communication, and a Gemini-powered RAG chatbot for medical supply management in the Equipment Department.' },
-    { role: 'Undergraduate Thesis Researcher · Present', place: 'AVITECH · VNU-UET', logo: 'avitech.png', detail: 'Deep learning for Alzheimer’s disease prognosis using multimodal and longitudinal data to study progression over time.' },
+    { role: 'Undergraduate Thesis Researcher · Present', place: 'AVITECH · VNU-UET', logo: 'avitech.webp', detail: 'Deep learning for Alzheimer’s disease prognosis using multimodal and longitudinal data to study progression over time.' },
   ],
   vi: [
     { role: 'Thực tập sinh AI · 12/2025 — 07/2026', place: 'Viettel High Tech', logo: 'viettel-high-tech.svg', detail: 'Phòng Thị giác và Định vị UAV. Nghiên cứu phát hiện mục tiêu từ ảnh nhiệt và hồng ngoại, mô phỏng camera trên X-Plane 11 và tích hợp vào môi trường bay mô phỏng.' },
     { role: 'Lập trình viên phần mềm · 12/2025 — 09/2026', place: 'Central Military Hospital 108', logo: 'hospital-108.jpg', detail: 'Phát triển backend bằng Golang và SQL, REST API, giao tiếp thời gian thực và chatbot RAG tích hợp Gemini cho hệ thống quản lý vật tư y tế tại Phòng Trang thiết bị.' },
-    { role: 'Nghiên cứu sinh viên · Hiện tại', place: 'AVITECH · VNU-UET', logo: 'avitech.png', detail: 'Ứng dụng học sâu vào dự báo tiến triển bệnh Alzheimer, khai thác dữ liệu đa phương thức và dữ liệu theo thời gian.' },
+    { role: 'Nghiên cứu sinh viên · Hiện tại', place: 'AVITECH · VNU-UET', logo: 'avitech.webp', detail: 'Ứng dụng học sâu vào dự báo tiến triển bệnh Alzheimer, khai thác dữ liệu đa phương thức và dữ liệu theo thời gian.' },
   ],
 } as const;
 const decorations = ['moon', 'lego', 'sculpture', 'ribbon'];
@@ -27,7 +27,7 @@ export function AboutSection() {
     <section id="about" aria-labelledby="about-title" className="about-section">
       <div className="section-eyebrow"><span>Nguyen Phuong Nam</span><span>{isVietnamese ? 'Hà Nội, Việt Nam' : 'Hanoi, Vietnam'}</span></div>
       <div className="about-stage">
-        <div className="about-decorations" aria-hidden="true">{decorations.map(name => <img key={name} className={`about-object about-object-${name}`} src={`/images/${name}.png`} alt="" loading="lazy" decoding="async" />)}</div>
+        <div className="about-decorations" aria-hidden="true">{decorations.map(name => <img key={name} className={`about-object about-object-${name}`} src={`/images/${name}.webp`} alt="" loading="lazy" decoding="async" />)}</div>
         <FadeIn y={35}><h2 id="about-title" className="hero-heading section-heading">{isVietnamese ? 'Giới thiệu' : 'About me'}</h2></FadeIn>
         <div className="about-editorial">
           <AnimatedText text={isVietnamese ? 'Tôi là Nguyễn Phương Nam, sinh viên ngành Trí tuệ nhân tạo và nhà phát triển phần mềm tại Hà Nội. Tôi làm việc trong các lĩnh vực học máy, thị giác máy tính, hệ thống backend và nghiên cứu y tế ứng dụng.' : 'I’m Nguyen Phuong Nam, an AI engineering student and software builder based in Hanoi. I work across machine learning, computer vision, backend systems, and applied healthcare research.'} />

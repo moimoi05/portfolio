@@ -1,7 +1,7 @@
 import { Readable } from 'node:stream';
 import { describe, expect, it, vi } from 'vitest';
-import { createDevChatMiddleware } from '../../api/devChatMiddleware';
-import type { VercelRequest, VercelResponse } from '../../api/types';
+import { createDevChatMiddleware } from '../../dev/chatMiddleware';
+import type { VercelRequest, VercelResponse } from '../../api/_lib/types';
 
 function makeRequest(path = '/api/chat') {
   const request = Readable.from([JSON.stringify({ message: 'What does Nam study?' })]) as Readable & {

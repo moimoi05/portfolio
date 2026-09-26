@@ -8,7 +8,7 @@ import { ProjectsSection } from './sections/ProjectsSection';
 import { contactHref } from './components/Buttons';
 import { MarqueeSection } from './sections/MarqueeSection';
 import { CvPage } from './sections/CvPage';
-import { PortfolioAssistant } from './components/PortfolioAssistant';
+import { AssistantLauncher } from './components/AssistantLauncher';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 
 function PortfolioPage() {
@@ -29,7 +29,7 @@ function PortfolioPage() {
           <a href="#top">{language === 'vi' ? 'Lên đầu trang ↑' : 'Back to top ↑'}</a>
         </footer>
       </main>
-      <PortfolioAssistant />
+      <AssistantLauncher />
     </MotionConfig>
   );
 }

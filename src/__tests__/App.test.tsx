@@ -1,11 +1,15 @@
 import { fireEvent, render, screen, within } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import App from '../App';
 
 const contactHref = 'mailto:nnam.hp2005@gmail.com';
 const privateProjects = ['Medical Supply Management', 'UAV Thermal Vision', 'Alzheimer’s Prognosis', 'AI for Rehabilitation'];
 
 describe('Nam portfolio', () => {
+  beforeEach(() => {
+    window.localStorage.clear();
+    window.history.replaceState(null, '', '/');
+  });
   it('links verified education, research affiliation, and the CV page', () => {
     render(<App />);
     expect(screen.getByRole('link', { name: /University of Engineering and Technology/ })).toHaveAttribute('href', 'https://uet.edu.vn/');
@@ -47,7 +51,7 @@ describe('Nam portfolio', () => {
     render(<App />);
     const hero = within(document.getElementById('top')!);
     expect(hero.getByRole('heading', { level: 1 })).toHaveTextContent(/BUILDING\s*INTELLIGENCE\./);
-    expect(hero.getByRole('img', { name: 'Nguyen Phuong Nam' })).toHaveAttribute('src', '/images/NguenPhuongNamv2.png');
+    expect(hero.getByRole('img', { name: 'Nguyen Phuong Nam' })).toHaveAttribute('src', '/images/NguenPhuongNamv2.webp');
     expect(hero.getByRole('link', { name: /view my work/i })).toHaveAttribute('href', '#projects');
     expect(hero.getByRole('link', { name: /contact me/i })).toHaveAttribute('href', contactHref);
     const navigation = within(screen.getByRole('navigation', { name: /primary/i }));
@@ -59,7 +63,7 @@ describe('Nam portfolio', () => {
     expect(navigation.getByRole('link', { name: 'Contact' })).toHaveAttribute('href', contactHref);
   });
 
-  it('switches the portfolio and assistant copy to Vietnamese', () => {
+  it('switches the portfolio and assistant copy to Vietnamese', async () => {
     window.localStorage.removeItem('portfolio-language');
     render(<App />);
     fireEvent.click(screen.getByRole('button', { name: 'Tiếng Việt' }));
@@ -72,12 +76,12 @@ describe('Nam portfolio', () => {
     expect(screen.getAllByText('Bài báo nguồn')).toHaveLength(2);
 
     fireEvent.click(screen.getByRole('button', { name: 'Hỏi AI về Nam' }));
-    expect(screen.getByRole('dialog', { name: 'Trợ lý portfolio của Nam' })).toBeInTheDocument();
+    expect(await screen.findByRole('dialog', { name: 'Trợ lý portfolio của Nam' }, { timeout: 5000 })).toBeInTheDocument();
     expect(screen.getByRole('textbox', { name: 'Tin nhắn của bạn' })).toHaveAttribute('placeholder', 'Hỏi về công việc của Nam…');
 
     fireEvent.click(screen.getByRole('button', { name: 'English' }));
     expect(document.documentElement).toHaveAttribute('lang', 'en');
-  });
+  }, 15_000);
 
   it('uses Nam’s actual profile and preserves the email contact links', () => {
     render(<App />);

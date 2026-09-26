@@ -55,10 +55,10 @@ function readCachedMessages(): ChatMessage[] {
   }
 }
 
-export function PortfolioAssistant() {
+export function PortfolioAssistant({ initiallyOpen = false }: { initiallyOpen?: boolean }) {
   const { language } = useLanguage();
   const isVietnamese = language === 'vi';
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(initiallyOpen);
   const [draft, setDraft] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>(readCachedMessages);
   const [isLoading, setIsLoading] = useState(false);
@@ -108,8 +108,9 @@ export function PortfolioAssistant() {
   }, [isOpen]);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView?.({ block: 'end', behavior: 'smooth' });
-  }, [messages, isLoading]);
+    const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth';
+    messagesEndRef.current?.scrollIntoView?.({ block: 'end', behavior });
+  }, [messages, isLoading, isOpen]);
 
   const closeAssistant = () => {
     restoreFocusOnClose.current = true;
@@ -141,7 +142,6 @@ export function PortfolioAssistant() {
     } finally {
       requestInFlight.current = false;
       setIsLoading(false);
-      inputRef.current?.focus();
     }
   };
 
@@ -220,7 +220,7 @@ export function PortfolioAssistant() {
                 value={draft}
                 onChange={event => setDraft(event.target.value)}
                 onKeyDown={event => {
-                  if (event.key === 'Enter' && !event.shiftKey) {
+                  if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing && event.keyCode !== 229) {
                     event.preventDefault();
                     void sendQuestion(draft);
                   }

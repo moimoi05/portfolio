@@ -1,6 +1,6 @@
-import chatHandler from './chat.js';
-import type { VercelRequest, VercelResponse } from './types.js';
-import { PORTFOLIO_ASSISTANT_MAX_BODY_BYTES } from './_lib/assistantConfig.js';
+import chatHandler from '../api/chat.js';
+import type { VercelRequest, VercelResponse } from '../api/_lib/types.js';
+import { PORTFOLIO_ASSISTANT_MAX_BODY_BYTES } from '../api/_lib/assistantConfig.js';
 
 type ChatHandler = (request: VercelRequest, response: VercelResponse) => Promise<void>;
 

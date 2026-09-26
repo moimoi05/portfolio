@@ -1,6 +1,6 @@
 export const researchFigures = {
   research: {
-    src: '/images/research/alzheimer-pipeline.png',
+    src: '/images/research/alzheimer-pipeline.webp',
     alt: 'Published Alzheimer’s prognosis pipeline: multimodal feature extraction, interaction modules, and stepwise fusion classification.',
     title: 'Multimodal learning for Alzheimer’s progression',
     authors: 'Wang et al. (2024)', journal: 'Journal of Translational Medicine', figure: 'Figure 2',
