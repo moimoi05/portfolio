@@ -54,8 +54,8 @@ test.describe('Selected Projects stacking', () => {
     });
   }
 
-  test('mobile and reduced motion keep full cards in ordinary reading order', async ({ page }) => {
-    for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 900 }]) {
+  test('mobile cards stack while reduced motion keeps ordinary reading order', async ({ page }) => {
+    for (const viewport of [{ width: 390, height: 844 }, { width: 624, height: 1364 }, { width: 1440, height: 900 }]) {
       await page.setViewportSize(viewport);
       await page.emulateMedia({ reducedMotion: viewport.width > 1000 ? 'reduce' : 'no-preference' });
       await page.goto('/#projects');
@@ -65,9 +65,27 @@ test.describe('Selected Projects stacking', () => {
         bottom: element.getBoundingClientRect().bottom,
       })));
       for (const [index, card] of cards.entries()) {
-        expect(card.position).toBe('relative');
-        if (index > 0) expect(card.top).toBeGreaterThan(cards[index - 1].bottom);
+        if (viewport.width < 1000) {
+          expect(card.position).toBe('sticky');
+        } else {
+          expect(card.position).toBe('relative');
+          if (index > 0) expect(card.top).toBeGreaterThan(cards[index - 1].bottom);
+        }
       }
+      expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(viewport.width);
+    }
+  });
+
+  test('mobile inspiration GIF tiles scale to the viewport instead of cropping oversized frames', async ({ page }) => {
+    for (const viewport of [{ width: 390, height: 844 }, { width: 624, height: 1364 }]) {
+      await page.setViewportSize(viewport);
+      await page.goto('/');
+      const tile = page.locator('.marquee-tile').first();
+      const box = await tile.boundingBox();
+      expect(box).not.toBeNull();
+      expect(box!.width).toBeLessThanOrEqual(360);
+      expect(box!.width).toBeGreaterThanOrEqual(300);
+      expect(box!.height / box!.width).toBeCloseTo(270 / 420, 2);
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(viewport.width);
     }
   });
