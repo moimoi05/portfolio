@@ -151,3 +151,27 @@
 @media (min-width: 1024px) and (prefers-reduced-motion: reduce) {
   .nam-project-slot { position: relative; top: 0 !important; }
 }
+
+/* Keep the stacked project rhythm on phones as well. Each incoming card sits
+   14px below the previous one through the inline slot offset, while its opaque
+   surface covers the card beneath it during the scroll. */
+@media (max-width: 1023px) {
+  .nam-projects-section .nam-project-stack { --nam-card-top: 18px; }
+  .nam-projects-section .nam-project-slot { position: sticky; }
+}
+
+/* The inspiration reel uses wide desktop tiles. A capped phone tile keeps the
+   full GIF frame visible instead of letting a 420px tile dominate a narrow
+   viewport or crop outside the section. */
+@media (max-width: 767px) {
+  .marquee-section .marquee-row { padding-inline: 12px; }
+  .marquee-section .marquee-tile {
+    width: min(360px, calc(100vw - 48px));
+    height: auto;
+    aspect-ratio: 420 / 270;
+  }
+}
+
+@media (max-width: 1023px) and (prefers-reduced-motion: reduce) {
+  .nam-projects-section .nam-project-slot { position: relative; top: 0 !important; }
+}
