@@ -1,15 +1,15 @@
 import { GoogleGenAI } from '@google/genai';
-import type { VercelRequest, VercelResponse } from './types';
-import { PORTFOLIO_CONTEXT } from '../src/data/portfolioContext';
+import type { VercelRequest, VercelResponse } from './types.js';
+import { PORTFOLIO_CONTEXT } from './_lib/portfolioContext.js';
 import {
   PORTFOLIO_ASSISTANT_MAX_BODY_BYTES,
   PORTFOLIO_ASSISTANT_MAX_MESSAGE_LENGTH,
-} from '../src/data/portfolioAssistantContract';
+  MAX_OUTPUT_TOKENS,
+  RATE_LIMIT_MAX_REQUESTS,
+  RATE_LIMIT_WINDOW_MS,
+  safeModelName,
+} from './_lib/assistantConfig.js';
 
-const DEFAULT_MODEL = 'gemini-flash-latest';
-const MAX_OUTPUT_TOKENS = 1024;
-const RATE_LIMIT_MAX_REQUESTS = 12;
-const RATE_LIMIT_WINDOW_MS = 60_000;
 const SYSTEM_INSTRUCTION = `You are the portfolio assistant for Nguyen Phuong Nam (Nam).
 
 Only answer questions about Nam, his education, experience, projects, skills, research, and the work shown on his portfolio. Use only the supplied portfolio information. Never invent facts, achievements, dates, technical details, or personal information. If the information is not present, say: "The portfolio doesn't contain enough information to answer that."
@@ -66,11 +66,6 @@ function parseBody(rawBody: unknown): ParseResult {
   }
 
   return { ok: true, message: message.trim() };
-}
-
-function safeModelName(): string {
-  const configured = process.env.GEMINI_MODEL?.trim();
-  return configured && /^[a-zA-Z0-9._-]{1,64}$/.test(configured) ? configured : DEFAULT_MODEL;
 }
 
 function clientIdentifier(headers: VercelRequest['headers']): string {
