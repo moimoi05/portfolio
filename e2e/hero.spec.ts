@@ -21,6 +21,28 @@ test('Hero scene pauses, resumes after a click, and respects a changed motion pr
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });
 
+test('mobile touch drag moves the profile badge', async ({ page, isMobile }) => {
+  test.skip(!isMobile, 'Uses the touch-enabled mobile project.');
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Pause hero animation' }).click();
+  const card = page.locator('.hero-id-card');
+  await card.scrollIntoViewIfNeeded();
+  const box = await card.boundingBox();
+  expect(box).not.toBeNull();
+  const session = await page.context().newCDPSession(page);
+  const point = { x: box!.x + box!.width / 2, y: box!.y + box!.height / 2 };
+  await session.send('Input.dispatchTouchEvent', {
+    type: 'touchStart',
+    touchPoints: [{ ...point, radiusX: 8, radiusY: 8, force: 1, id: 1 }],
+  });
+  await session.send('Input.dispatchTouchEvent', {
+    type: 'touchMove',
+    touchPoints: [{ ...point, x: point.x + 80, y: point.y - 35, radiusX: 8, radiusY: 8, force: 1, id: 1 }],
+  });
+  await expect.poll(() => card.evaluate(element => Math.abs(new DOMMatrix(getComputedStyle(element.parentElement!).transform).m41)), { timeout: 3000 }).toBeGreaterThan(10);
+  await session.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+});
+
 test('company logos load next to all three company names', async ({ page }) => {
   await page.goto('/#about');
   for (const name of ['Viettel High Tech', 'Central Military Hospital 108', 'AVITECH · VNU-UET']) {
