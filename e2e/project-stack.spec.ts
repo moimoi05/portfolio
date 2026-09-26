@@ -83,8 +83,8 @@ test.describe('Selected Projects stacking', () => {
       const tile = page.locator('.marquee-tile').first();
       const box = await tile.boundingBox();
       expect(box).not.toBeNull();
-      expect(box!.width).toBeLessThanOrEqual(360);
-      expect(box!.width).toBeGreaterThanOrEqual(300);
+      expect(box!.width).toBeLessThanOrEqual(240);
+      expect(box!.width).toBeGreaterThanOrEqual(200);
       expect(box!.height / box!.width).toBeCloseTo(270 / 420, 2);
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(viewport.width);
     }
