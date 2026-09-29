@@ -2,7 +2,7 @@ export const PORTFOLIO_CONTEXT = `
 Identity and profile
 - Name: Nguyen Phuong Nam (Nam).
 - He is an Artificial Intelligence student and software developer based in Hanoi, Vietnam.
-- Portfolio: https://www.nnam05.id.vn/ . Contact: nnam.hp2005@gmail.com.
+- Portfolio: https://nnam.id.vn/ (Vercel fallback: https://portfolio-one-sand-hdgsu9hs2b.vercel.app/). Contact: nnam.hp2005@gmail.com.
 
 Education and recognition
 - University of Engineering and Technology, Vietnam National University, Hanoi (UET-VNU).
@@ -13,6 +13,7 @@ Education and recognition
 Experience
 - Viettel High Tech, AI Intern in the UAV Perception and Navigation Department (December 2025–July 2026 on the CV): computer vision for UAV target detection using thermal and infrared camera data; integrated thermal imagery into simulated aerial environments; developed an X-Plane 11 camera simulation plug-in.
 - Central Military Hospital 108, Junior Software Developer in the Equipment Department (December 2025–September 2026 on the CV): built a medical supply management system with Golang; designed its database schema, REST APIs, and backend business logic; implemented WebSocket live updates; integrated a Gemini-powered RAG chatbot over application data and internal knowledge; deployed the system to the hospital's internal web environment.
+- RTC Technology Vietnam, Machine Vision (dates not specified): supported image processing and deep learning for product defect inspection, QR/Data Matrix/barcode reading, and OCR; integrated vision for robotic pick-and-place positioning; configured vision systems and selected cameras, lenses, and lighting for each task. Company website: https://rtctechnology.com.vn/ .
 - AVITECH Research Group, VNU-UET: undergraduate thesis research on Alzheimer's disease prognosis using deep learning, longitudinal data, and multimodal data to study progression over time. Research profile: https://avitechresearch.vn/nguyen-phuong-nam/ .
 - Rehabilitation collaboration: ongoing AI research with the Department of Rehabilitation at Central Military Hospital 108. The portfolio does not specify clinical outcomes or a completed model.
 - UET project team leader (September 2023–present on the CV): led academic teams across AI, machine learning, computer vision, and software development; coordinated task allocation, implementation, integration, and delivery.

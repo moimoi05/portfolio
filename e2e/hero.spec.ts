@@ -49,6 +49,6 @@ test('company logos load next to all four company names', async ({ page }) => {
     const heading = page.getByRole('heading', { name, exact: true });
     await heading.scrollIntoViewIfNeeded();
     await expect.poll(() => heading.locator('img').evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0)).toBe(true);
-    expect(await heading.evaluate(el => el.querySelector('img')!.getBoundingClientRect().right <= el.lastElementChild!.getBoundingClientRect().left)).toBe(true);
+    expect(await heading.evaluate(el => el.querySelector('img')!.getBoundingClientRect().right <= el.querySelector('a > span:last-of-type')!.getBoundingClientRect().left)).toBe(true);
   }
 });

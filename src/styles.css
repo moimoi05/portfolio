@@ -33,12 +33,15 @@ button { cursor: pointer; }
 .about-secondary { display: flex; flex-direction: column; align-items: flex-start; gap: 24px; padding-top: 6px; }
 .about-secondary p { max-width: 470px; color: #9aa2aa; font-size: clamp(1rem, 1.4vw, 1.2rem); font-weight: 300; line-height: 1.8; }
 .about-secondary .contact-button { margin-top: 10px; }
-.experience-list { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid #d7e2ea26; border-bottom: 1px solid #d7e2ea26; }
+.experience-list { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid #d7e2ea26; border-bottom: 1px solid #d7e2ea26; }
 .experience-item { padding: 32px 32px 34px 0; }
 .experience-item + .experience-item { border-left: 1px solid #d7e2ea26; padding-left: 32px; }
 .experience-role { color: #89919a; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
 .experience-item h3 { font-size: clamp(1.1rem, 1.5vw, 1.4rem); font-weight: 400; margin: 12px 0 14px; }
-.experience-company { display: flex; align-items: center; gap: 15px; min-height: 56px; line-height: 1.3; }
+.experience-company { min-height: 56px; line-height: 1.3; }
+.experience-company a { display: flex; align-items: center; gap: 12px; }
+.experience-company a > svg { flex: 0 0 auto; color: #89919a; transition: transform 180ms, color 180ms; }
+.experience-company a:hover > svg, .experience-company a:focus-visible > svg { color: #d7e2ea; transform: translate(2px, -2px); }
 .experience-logo { display: grid; place-items: center; flex: 0 0 72px; height: 56px; padding: 6px; overflow: hidden; border: 1px solid #dce2e8; border-radius: 10px; background: #fff; box-shadow: 0 4px 14px #00000018; }
 .experience-logo img { display: block; width: 60px; height: 44px; object-fit: contain; }
 .experience-item p { max-width: 360px; font-size: 15px; font-weight: 300; color: #a0a8b0; line-height: 1.7; }
@@ -71,6 +74,11 @@ button { cursor: pointer; }
 @media (min-width: 768px) {
   .hero-title-wrap { margin-left: 16px; margin-right: 16px; }
   .contact-button { padding: 16px 48px; font-size: 16px; }
+}
+@media (min-width: 901px) and (max-width: 1200px) {
+  .experience-list { grid-template-columns: repeat(2, 1fr); }
+  .experience-item:nth-child(n + 3) { border-top: 1px solid #d7e2ea26; }
+  .experience-item:nth-child(3) { border-left: 0; padding-left: 0; }
 }
 @media (max-width: 900px) {
   .about-editorial { grid-template-columns: 1fr; gap: 36px; margin: 48px 0 56px; }
@@ -167,6 +175,7 @@ button { cursor: pointer; }
 .cv-entry { margin-top: 26px; }
 .cv-entry-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; }
 .cv-entry-heading h3 { color: #d7e2ea; font-size: 17px; font-weight: 500; }
+.cv-entry-heading h3 a:hover, .cv-entry-heading h3 a:focus-visible { text-decoration: underline; text-underline-offset: 4px; }
 .cv-entry-heading span { flex: 0 0 auto; color: #89939c; font-size: 12px; }
 .cv-text .cv-entry-role { margin: 4px 0 10px; color: #adb7bf; }
 .cv-entry ul { margin: 10px 0 0 20px; }

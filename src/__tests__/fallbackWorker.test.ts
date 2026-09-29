@@ -21,6 +21,12 @@ describe('Cloudflare origin fallback', () => {
     expect(response.headers.get('location')).toBe('https://portfolio-one-sand-hdgsu9hs2b.vercel.app/cv?lang=vi');
   });
 
+  it('also redirects the www hostname', async () => {
+    const wwwRequest = new Request('https://www.nnam.id.vn/projects?q=vision');
+    const response = await handleRequest(wwwRequest, vi.fn().mockRejectedValue(new Error('origin offline')));
+    expect(response.headers.get('location')).toBe('https://portfolio-one-sand-hdgsu9hs2b.vercel.app/projects?q=vision');
+  });
+
   it('redirects the current T3 default server page even though it returns HTTP 200', async () => {
     const placeholder = new Response('<html><title>Trang mặc định của máy chủ</title></html>', {
       headers: { 'content-type': 'text/html; charset=utf-8' },

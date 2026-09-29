@@ -27,7 +27,7 @@ export default defineConfig(({ mode }) => {
       include: ['src/**/*.test.{ts,tsx}'],
       coverage: {
         provider: 'v8',
-        include: ['src/**/*.{ts,tsx}', 'api/**/*.ts', 'dev/**/*.ts'],
+        include: ['src/**/*.{ts,tsx}', 'api/**/*.ts', 'dev/**/*.ts', 'cloudflare/**/*.ts'],
         reporter: ['text', 'json-summary', 'html'],
         exclude: ['src/__tests__/**', 'src/main.tsx', 'src/data/**'],
         thresholds: { lines: 80, functions: 80, branches: 80, statements: 80 },

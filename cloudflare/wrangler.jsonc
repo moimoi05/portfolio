@@ -1,0 +1,10 @@
+{
+  "name": "nnam-origin-fallback",
+  "main": "worker.ts",
+  "compatibility_date": "2026-09-29",
+  "workers_dev": false,
+  "routes": [
+    { "pattern": "nnam.id.vn/*", "zone_name": "nnam.id.vn" },
+    { "pattern": "www.nnam.id.vn/*", "zone_name": "nnam.id.vn" }
+  ]
+}

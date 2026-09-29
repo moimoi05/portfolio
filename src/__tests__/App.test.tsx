@@ -47,6 +47,14 @@ describe('Nam portfolio', () => {
     expect(screen.getByRole('heading', { name: 'RTC Technology Vietnam' })).toBeInTheDocument();
     expect(screen.getByText(/camera, lens and lighting selection/i)).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'nnam.id.vn' })).toHaveAttribute('href', 'https://nnam.id.vn/');
+    for (const [name, href] of [
+      ['Viettel High Tech', 'https://www.viettelhightech.com/'],
+      ['Central Military Hospital 108', 'https://www.benhvien108.vn/'],
+      ['RTC Technology Vietnam', 'https://rtctechnology.com.vn/'],
+      ['AVITECH Research Group, VNU-UET', 'https://avitechresearch.vn/'],
+    ]) {
+      expect(screen.getByRole('link', { name })).toHaveAttribute('href', href);
+    }
     fireEvent.click(screen.getByRole('button', { name: 'Tiếng Việt' }));
     expect(screen.getByText(/mã QR, Data Matrix và mã vạch/i)).toBeInTheDocument();
   });
@@ -67,7 +75,7 @@ describe('Nam portfolio', () => {
     window.history.replaceState(null, '', '/cv');
     const { unmount } = render(<App />);
     expect(screen.getByRole('heading', { level: 1, name: 'Nguyen Phuong Nam' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /open original pdf/i })).toHaveAttribute('href', '/cv/CV_Nguyen_Phuong_Nam.pdf');
+    expect(screen.getByRole('link', { name: /open pdf/i })).toHaveAttribute('href', '/cv/CV_Nguyen_Phuong_Nam.pdf');
     expect(screen.getByRole('img', { name: /curriculum vitae/i })).toHaveAttribute('src', '/cv/cv-preview.webp');
     expect(screen.getByRole('link', { name: /back to portfolio/i })).toHaveAttribute('href', '/#about');
     fireEvent.click(screen.getByRole('button', { name: 'Tiếng Việt' }));
