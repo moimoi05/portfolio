@@ -143,8 +143,8 @@ describe('POST /api/chat', () => {
     expect(createInteraction).not.toHaveBeenCalled();
   });
 
-  it('uses the configured Flash model through Interactions with grounded context and low reasoning', async () => {
-    process.env.GEMINI_MODEL = 'gemini-3.8-flash';
+  it('uses a configured available Flash model through Interactions with grounded context and low reasoning', async () => {
+    process.env.GEMINI_MODEL = 'gemini-3-flash-preview';
     createInteraction.mockResolvedValue({ output_text: 'Nam studies Artificial Intelligence at UET.' });
     const response = makeResponse();
 
@@ -163,6 +163,12 @@ describe('POST /api/chat', () => {
       }),
     }), expect.objectContaining({ timeout: 20_000, maxRetries: 0 }));
     expect(response.headers['Cache-Control']).toBe('no-store');
+  });
+
+  it('falls back to the stable Flash-Lite model when the configured model is currently unavailable', () => {
+    process.env.GEMINI_MODEL = 'gemini-3.8-flash';
+
+    expect(safeModelName()).toBe('gemini-3.1-flash-lite');
   });
 
   it('returns a generic error if Gemini fails', async () => {
