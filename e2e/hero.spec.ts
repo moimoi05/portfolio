@@ -43,9 +43,9 @@ test('mobile touch drag moves the profile badge', async ({ page, isMobile }) => 
   await session.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
 });
 
-test('company logos load next to all three company names', async ({ page }) => {
+test('company logos load next to all four company names', async ({ page }) => {
   await page.goto('/#about');
-  for (const name of ['Viettel High Tech', 'Central Military Hospital 108', 'AVITECH · VNU-UET']) {
+  for (const name of ['Viettel High Tech', 'Central Military Hospital 108', 'RTC Technology Vietnam', 'AVITECH · VNU-UET']) {
     const heading = page.getByRole('heading', { name, exact: true });
     await heading.scrollIntoViewIfNeeded();
     await expect.poll(() => heading.locator('img').evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0)).toBe(true);

@@ -20,6 +20,36 @@ describe('Nam portfolio', () => {
     expect(screen.getByText(/Backend systems with Golang and SQL/)).toBeInTheDocument();
   });
 
+  it('lists RTC Technology between Hospital 108 and AVITECH and links every employer homepage', () => {
+    render(<App />);
+    const about = within(document.getElementById('about')!);
+    const employers = [
+      ['Viettel High Tech', 'https://www.viettelhightech.com/'],
+      ['Central Military Hospital 108', 'https://www.benhvien108.vn/'],
+      ['RTC Technology Vietnam', 'https://rtctechnology.com.vn/'],
+      ['AVITECH · VNU-UET', 'https://avitechresearch.vn/'],
+    ] as const;
+
+    const names = Array.from(document.querySelectorAll('#about .experience-company')).map(element => element.textContent);
+    expect(names).toEqual(employers.map(([name]) => name));
+    for (const [name, href] of employers) {
+      const link = about.getByRole('link', { name });
+      expect(link).toHaveAttribute('href', href);
+      expect(link).toHaveAttribute('target', '_blank');
+      expect(link.getAttribute('rel')?.split(/\s+/)).toEqual(expect.arrayContaining(['noopener', 'noreferrer']));
+    }
+    expect(about.getByText(/product defect inspection, QR, Data Matrix and barcode reading/i)).toBeInTheDocument();
+  });
+
+  it('includes RTC machine vision work in the bilingual web CV', () => {
+    window.history.replaceState(null, '', '/cv');
+    render(<App />);
+    expect(screen.getByRole('heading', { name: 'RTC Technology Vietnam' })).toBeInTheDocument();
+    expect(screen.getByText(/camera, lens and lighting selection/i)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Tiếng Việt' }));
+    expect(screen.getByText(/mã QR, Data Matrix và mã vạch/i)).toBeInTheDocument();
+  });
+
   it('credits published reference figures separately from personal research', () => {
     render(<App />);
     for (const name of ['Alzheimer’s Prognosis', 'AI for Rehabilitation']) {
