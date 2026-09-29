@@ -46,6 +46,7 @@ describe('Nam portfolio', () => {
     render(<App />);
     expect(screen.getByRole('heading', { name: 'RTC Technology Vietnam' })).toBeInTheDocument();
     expect(screen.getByText(/camera, lens and lighting selection/i)).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'nnam.id.vn' })).toHaveAttribute('href', 'https://nnam.id.vn/');
     fireEvent.click(screen.getByRole('button', { name: 'Tiếng Việt' }));
     expect(screen.getByText(/mã QR, Data Matrix và mã vạch/i)).toBeInTheDocument();
   });
