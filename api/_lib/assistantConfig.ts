@@ -7,7 +7,15 @@ export const GEMINI_TIMEOUT_MS = 20_000;
 export const RATE_LIMIT_MAX_REQUESTS = 12;
 export const RATE_LIMIT_WINDOW_MS = 60_000;
 
+// Gemini 3.8 Flash is currently timing out through the Interactions API.
+// Keep the public assistant on the stable Flash-Lite model until availability recovers.
+const TEMPORARILY_UNAVAILABLE_MODELS = new Set(['gemini-3.8-flash']);
+
 export function safeModelName(): string {
   const configured = process.env.GEMINI_MODEL?.trim();
-  return configured && /^[a-zA-Z0-9._-]{1,64}$/.test(configured) ? configured : DEFAULT_MODEL;
+  return configured
+    && /^[a-zA-Z0-9._-]{1,64}$/.test(configured)
+    && !TEMPORARILY_UNAVAILABLE_MODELS.has(configured)
+    ? configured
+    : DEFAULT_MODEL;
 }

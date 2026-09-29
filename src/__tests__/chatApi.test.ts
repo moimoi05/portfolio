@@ -153,7 +153,7 @@ describe('POST /api/chat', () => {
     expect(response.statusCode).toBe(200);
     expect(response.data).toEqual({ message: 'Nam studies Artificial Intelligence at UET.' });
     expect(createInteraction).toHaveBeenCalledWith(expect.objectContaining({
-      model: 'gemini-3.8-flash',
+      model: 'gemini-3-flash-preview',
       input: 'What does Nam study?',
       store: false,
       system_instruction: expect.stringContaining('University of Engineering and Technology'),
