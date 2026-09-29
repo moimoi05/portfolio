@@ -20,14 +20,13 @@ describe('Nam portfolio', () => {
     expect(screen.getByText(/Backend systems with Golang and SQL/)).toBeInTheDocument();
   });
 
-  it('lists RTC Technology between Hospital 108 and AVITECH and links every employer homepage', () => {
+  it('lists the three work companies and keeps AVITECH in the research affiliation above', () => {
     render(<App />);
     const about = within(document.getElementById('about')!);
     const employers = [
       ['Viettel High Tech', 'https://www.viettelhightech.com/'],
       ['Central Military Hospital 108', 'https://www.benhvien108.vn/'],
       ['RTC Technology Vietnam', 'https://rtctechnology.com.vn/'],
-      ['AVITECH · VNU-UET', 'https://avitechresearch.vn/'],
     ] as const;
 
     const names = Array.from(document.querySelectorAll('#about .experience-company')).map(element => element.textContent);
@@ -38,6 +37,8 @@ describe('Nam portfolio', () => {
       expect(link).toHaveAttribute('target', '_blank');
       expect(link.getAttribute('rel')?.split(/\s+/)).toEqual(expect.arrayContaining(['noopener', 'noreferrer']));
     }
+    expect(about.queryByRole('link', { name: 'AVITECH · VNU-UET' })).not.toBeInTheDocument();
+    expect(about.getByRole('link', { name: 'AVITECH Research Group' })).toHaveAttribute('href', 'https://avitechresearch.vn/');
     expect(about.getByText(/product defect inspection, QR, Data Matrix and barcode reading/i)).toBeInTheDocument();
   });
 
@@ -45,6 +46,8 @@ describe('Nam portfolio', () => {
     window.history.replaceState(null, '', '/cv');
     render(<App />);
     expect(screen.getByRole('heading', { name: 'RTC Technology Vietnam' })).toBeInTheDocument();
+    expect(screen.getByText('Technical Intern · R&D/Vision Division')).toBeInTheDocument();
+    expect(screen.getByText('September 2026 – Present')).toBeInTheDocument();
     expect(screen.getByText(/camera, lens and lighting selection/i)).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'nnam.id.vn' })).toHaveAttribute('href', 'https://nnam.id.vn/');
     for (const [name, href] of [

@@ -63,8 +63,8 @@ export function CvPage() {
             </ul>
           </article>
           <article className="cv-entry">
-            <div className="cv-entry-heading"><h3><a href="https://rtctechnology.com.vn/" target="_blank" rel="noopener noreferrer">RTC Technology Vietnam</a></h3></div>
-            <p className="cv-entry-role">Machine Vision</p>
+            <div className="cv-entry-heading"><h3><a href="https://rtctechnology.com.vn/" target="_blank" rel="noopener noreferrer">RTC Technology Vietnam</a></h3><span>{isVietnamese ? '09/2026 – Hiện tại' : 'September 2026 – Present'}</span></div>
+            <p className="cv-entry-role">{isVietnamese ? 'Thực tập kỹ thuật · Bộ phận R&D/Thị giác' : 'Technical Intern · R&D/Vision Division'}</p>
             <ul>
               <li>{isVietnamese ? 'Hỗ trợ lập trình xử lý ảnh và AI học sâu cho kiểm tra lỗi sản phẩm; đọc mã QR, Data Matrix và mã vạch; nhận dạng ký tự (OCR).' : 'Supported image processing and deep learning for product defect inspection, QR, Data Matrix and barcode reading, and OCR.'}</li>
               <li>{isVietnamese ? 'Tích hợp thị giác máy tính để định vị sản phẩm cho robot gắp đặt.' : 'Integrated machine vision to locate products for robotic pick-and-place.'}</li>
@@ -81,12 +81,8 @@ export function CvPage() {
             <p>{isVietnamese ? 'Hồ sơ nghiên cứu' : 'Research profile'}: <a href="https://avitechresearch.vn/nguyen-phuong-nam/" target="_blank" rel="noopener noreferrer">avitechresearch.vn/nguyen-phuong-nam</a></p>
           </article>
         </section>
-        <section className="cv-section" aria-labelledby="cv-leadership-title">
-          <h2 id="cv-leadership-title">{isVietnamese ? 'Lãnh đạo & kỹ năng kỹ thuật' : 'Leadership & technical skills'}</h2>
-          <div className="cv-entry">
-            <div className="cv-entry-heading"><h3>{isVietnamese ? 'UET · Trưởng nhóm dự án' : 'UET · Project Team Leader'}</h3><span>{isVietnamese ? '09/2023 – Hiện tại' : 'Sep 2023 – Present'}</span></div>
-            <p>{isVietnamese ? 'Dẫn dắt các nhóm học thuật trong AI, học máy, thị giác máy tính và phát triển phần mềm; điều phối phân công, triển khai, tích hợp và bàn giao.' : 'Led academic teams in AI, machine learning, computer vision, and software development; coordinated task allocation, implementation, integration, and delivery.'}</p>
-          </div>
+        <section className="cv-section" aria-labelledby="cv-skills-title">
+          <h2 id="cv-skills-title">{isVietnamese ? 'Kỹ năng kỹ thuật' : 'Technical skills'}</h2>
           <div className="cv-skills">
             <p><strong>{isVietnamese ? 'Lập trình' : 'Programming'}:</strong> Python, Golang</p>
             <p><strong>{isVietnamese ? 'Học máy & học sâu' : 'Machine & deep learning'}:</strong> PyTorch, scikit-learn, Hugging Face, CNN, RNN, LSTM, Transformer, BERT, GPT</p>

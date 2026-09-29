@@ -64,7 +64,7 @@ def build_pdf() -> None:
     story.append(heading("University of Engineering and Technology - Vietnam National University, Hanoi", "Sep 2023 - Dec 2026", "https://uet.edu.vn/"))
     story.append(Paragraph("Major: Artificial Intelligence &nbsp;|&nbsp; GPA: 3.28 &nbsp;|&nbsp; IELTS: 6.0", BODY))
     story.append(Paragraph("Honors: Top 10% Finalist, Naver Hackathon; Consolation Prize, UET Makathon; Outstanding Student Certificate (2026).", BODY))
-    story.append(Paragraph('Portfolio: <link href="https://nnam.id.vn/">nnam.id.vn</link>', BODY))
+    story.append(Paragraph('Portfolio: <link href="https://nnam05.id.vn/">nnam05.id.vn</link>', BODY))
 
     section(story, "EXPERIENCE")
     story.append(heading("Viettel High Tech", "Dec 2025 - Jul 2026", "https://www.viettelhightech.com/"))
@@ -84,8 +84,8 @@ def build_pdf() -> None:
     ])
     story.append(Spacer(1, 5))
 
-    story.append(heading("RTC Technology Vietnam", url="https://rtctechnology.com.vn/"))
-    story.append(Paragraph("Machine Vision", ROLE))
+    story.append(heading("RTC Technology Vietnam", "September 2026 - Present", "https://rtctechnology.com.vn/"))
+    story.append(Paragraph("Technical Intern, R&amp;D/Vision Division", ROLE))
     bullets(story, [
         "Supported image processing and deep learning for product defect inspection; QR, Data Matrix and barcode reading; and OCR.",
         "Supported vision-guided product positioning for robotic pick-and-place.",
@@ -99,13 +99,6 @@ def build_pdf() -> None:
         "Researching Alzheimer's prognosis with deep learning and longitudinal, multimodal data to model disease progression over time.",
     ])
     story.append(Paragraph('Research profile: <link href="https://avitechresearch.vn/nguyen-phuong-nam/">avitechresearch.vn/nguyen-phuong-nam/</link>', BODY))
-
-    section(story, "LEADERSHIP & ACTIVITIES")
-    story.append(heading("University of Engineering and Technology - VNU", "Sep 2023 - Present"))
-    story.append(Paragraph("Project Team Leader", ROLE))
-    bullets(story, [
-        "Led academic teams across AI, machine learning, computer vision and software development; coordinated implementation, integration and delivery.",
-    ])
 
     section(story, "TECHNICAL SKILLS")
     for label, value in [
